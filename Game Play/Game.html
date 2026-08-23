@@ -1,0 +1,1387 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <link href="/Asset/icono oso2.png" rel="icon" sizes="200x200" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Games</title>
+
+    <!-- Google Fonts optimizadas -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Montserrat:ital,wght@0,800;0,900;1,900&family=Quicksand:wght@500;600;700&family=Russo+One&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- =========================================================================
+         ICONOGRAFÍA FONTAWESOME 6 (Versión Robusta y Estable)
+         ========================================================================= -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <!-- Framework CSS Bulma (Mantenido para preservar compatibilidad de grillas y clases) -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
+
+    <!-- =========================================================================
+         ESTILOS EXCLUSIVOS TEMA NARANJA NEÓN PARA FORMULARIO GAME
+         ========================================================================= -->
+    <link rel="stylesheet" href="Game.css" />
+  </head>
+
+  <body>
+    <!-- =========================================================================
+         0. BARRA DE NAVEGACIÓN ENTRE FORMULARIOS (PESTAÑAS DE ACCESO RÁPIDO)
+         -------------------------------------------------------------------------
+         Aquí puedes alternar entre todos los formularios del sistema.
+         ========================================================================= -->
+    <!--<nav class="app-navigation-tabs">
+      <div class="tabs-container">
+        <!- Pestaña 1: Formulario Afiliados (Azul Neón) ->
+        <a href="/Afiliados/index.html" class="tab-item" id="tab-afiliados">
+          <i class="fa-solid fa-users-gear"></i>
+          <span>Afiliados</span>
+          <span class="tab-badge neon-blue-badge">1</span>
+        </a>
+
+        <!- Pestaña 2: Formulario Add (Verde Neón) ->
+        <a href="/Players/index.html" class="tab-item" id="tab-add">
+          <i class="fa-solid fa-file-circle-plus"></i>
+          <span>Players</span>
+          <span class="tab-badge neon-green-badge">2</span>
+        </a>
+
+        <!- Pestaña 3: Formulario Game (Naranja Neón - ACTIVA) ->
+        <a href="Game.html" class="tab-item active" id="tab-game">
+          <i class="fa-solid fa-gamepad"></i>
+          <span>Games</span>
+          <span class="tab-badge neon-orange-badge">3</span>
+        </a>
+      </div>
+    </nav>-->
+
+    <!-- =========================================================================
+         1. HERO / ENCABEZADO PRINCIPAL DE LA APLICACIÓN (NARANJA NEÓN)
+         ========================================================================= -->
+    <section class="hero is-primary is-bold">
+      <div class="hero-body">
+        <div class="hero-header-content">
+          <div class="hero-logo-badge">
+            <i class="fa-solid fa-gamepad"></i>
+          </div>
+          <div>
+            <h1 class="title">Games</h1>
+            <div class="hero-subtitle">
+              <span
+                ><i class="fa-solid fa-database"></i> Base de Datos en Google
+                Sheets</span
+              >
+              <span>•</span>
+              <span class="hero-badge-tag"
+                ><i class="fa-solid fa-bolt"></i> Conexión Dinámica</span
+              >
+              <div id="logo">
+                <img
+                  src="/Asset/icono oso2.png"
+                  alt="LogoPersonalizado"
+                  width="45"
+                  height="45"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         2. INDICADOR DE CONFIGURACIÓN ACTIVA (HOJA, CAMPO CLAVE Y MODO)
+         ========================================================================= -->
+    <!-- =========================================================================
+         2. INDICADOR DE CONFIGURACIÓN ACTIVA (HOJA, CAMPO CLAVE Y MODO)
+         ========================================================================= -->
+    <div class="config-indicator-bar">
+      <div class="config-item">
+        <i class="fa-solid fa-table-cells"></i>
+        <span>Hoja:</span>
+        <span class="config-chip" id="current-sheet-badge">Game</span>
+      </div>
+      <div class="config-item">
+        <i class="fa-solid fa-key"></i>
+        <span>Columna clave:</span>
+        <span class="config-chip purple" id="current-key-badge"
+          >ID / Versus</span
+        >
+      </div>
+      <div class="config-item">
+        <i class="fa-solid fa-toggle-on"></i>
+        <span>Modo activo:</span>
+        <span class="config-chip purple" id="current-mode-badge"
+          >Consultar (Cartelera)</span
+        >
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         3. SELECTOR DE MODO: CONSULTAR (PREDETERMINADO) vs. INGRESAR NUEVO
+         ========================================================================= -->
+    <div id="modeSelect-container" class="field">
+      <label class="label">
+        <i class="fa-solid fa-sliders"></i> Modo de Operación
+      </label>
+      <div class="control">
+        <div class="select is-fullwidth">
+          <select id="modeSelect" name="ELECCION">
+            <option value="consultar" selected>
+              🔍 Consultar (Cartelera de Enfrentamientos)
+            </option>
+            <option value="ingresar">✨ Ingresar (Crear nuevo registro)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         4. FORMULARIO PRINCIPAL: MÓDULO VERSUS (EQUIPO A VS EQUIPO B)
+         ========================================================================= -->
+    <form id="form" class="container versus-main-form" onsubmit="return false;">
+      <!-- Campos ocultos de configuración del sistema -->
+      <input type="hidden" id="sheetNameInput" name="sheetName" value="Game" />
+      <input type="hidden" id="searchSheetTarget" value="Afiliados" />
+      <input
+        type="hidden"
+        id="modeConfigInput"
+        name="modeConfig"
+        value="ambos"
+      />
+      <input
+        type="hidden"
+        id="searchKeyColumnInput"
+        name="searchKeyColumn"
+        value="RIF"
+      />
+
+      <!-- ===================================================================
+           SECCIÓN DE CREACIÓN / INGRESO DE ENFRENTAMIENTO (OCULTA EN MODO CONSULTAR)
+           Incluye: Configuración del juego, Búsqueda de Afiliados A & B,
+           Guardar enfrentamiento, Agregar otro enfrentamiento y Limpiar.
+           =================================================================== -->
+      <div
+        id="matchup-creation-section"
+        class="matchup-creation-wrapper"
+        style="display: none"
+      >
+        <!-- 0. PANEL DE GESTIÓN Y SELECCIÓN DE TORNEO (ID_Tournament & Tournament) -->
+        <div
+          class="field full-width tournament-config-panel"
+          id="tournament-config-panel"
+        >
+          <div class="tournament-panel-header">
+            <div class="tournament-panel-title">
+              <i class="fa-solid fa-trophy text-orange"></i>
+              <span>Gestión de Torneo</span>
+            </div>
+            <!-- Selector de Modo: Torneo Existente vs Crear Torneo Nuevo -->
+            <div class="tournament-mode-radios" id="tournament-mode-container">
+              <label
+                class="tournament-radio-label active"
+                id="label-tourn-existing"
+              >
+                <input
+                  type="radio"
+                  name="tournament_mode"
+                  id="tourn-mode-existing"
+                  value="existente"
+                  checked
+                />
+                <span
+                  ><i class="fa-solid fa-magnifying-glass"></i> Torneo
+                  Existente</span
+                >
+              </label>
+              <label class="tournament-radio-label" id="label-tourn-new">
+                <input
+                  type="radio"
+                  name="tournament_mode"
+                  id="tourn-mode-new"
+                  value="nuevo"
+                />
+                <span
+                  ><i class="fa-solid fa-plus-circle"></i> Crear Torneo
+                  Nuevo</span
+                >
+              </label>
+            </div>
+          </div>
+
+          <div class="tournament-fields-grid">
+            <!-- ID del Torneo (ID_Tournament) -->
+            <div class="config-field tourn-id-field">
+              <label class="label">
+                <i class="fa-solid fa-hashtag"></i> ID Torneo (<code
+                  style="
+                    background-color: transparent;
+                    padding: 0;
+                    color: inherit;
+                  "
+                  >ID_Tournament</code
+                >)
+              </label>
+              <div class="field has-addons">
+                <div class="control is-expanded">
+                  <input
+                    id="tournament-id-input"
+                    class="input"
+                    type="text"
+                    placeholder="Ej. TMT-00001"
+                  />
+                </div>
+                <div class="control" id="tourn-search-btn-wrap">
+                  <button
+                    type="button"
+                    class="button is-info"
+                    id="btn-search-tournament"
+                    title="Buscar torneo por su ID"
+                  >
+                    <i class="fa-solid fa-search"></i> Buscar
+                  </button>
+                </div>
+              </div>
+              <div
+                id="tournament-search-status"
+                class="search-status-text"
+                style="display: none"
+              ></div>
+            </div>
+
+            <!-- Nombre del Torneo (Tournament) -->
+            <div class="config-field tourn-name-field">
+              <label class="label">
+                <i class="fa-solid fa-medal"></i> Nombre del Torneo (<code
+                  style="
+                    background-color: transparent;
+                    padding: 0;
+                    color: inherit;
+                  "
+                  >Tournament</code
+                >)
+              </label>
+              <div class="control">
+                <input
+                  id="tournament-name-input"
+                  class="input"
+                  type="text"
+                  placeholder="Nombre del Torneo asociado..."
+                />
+              </div>
+            </div>
+
+            <!-- Desplegable Rápido de Torneos Registrados -->
+            <div
+              class="config-field tourn-select-field"
+              id="tourn-quick-select-wrap"
+            >
+              <label class="label">
+                <i class="fa-solid fa-list-check"></i> Torneos Registrados
+              </label>
+              <div class="control">
+                <div class="select is-fullwidth">
+                  <select id="tourn-quick-select">
+                    <option value="">-- Seleccionar de la lista --</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- A. PANEL DE CONFIGURACIÓN DEL JUEGO (TÍTULO, HORA Y FECHA) -->
+        <div class="field full-width matchup-config-panel">
+          <div class="matchup-config-grid">
+            <!-- Título del Juego -->
+            <div class="config-field">
+              <label class="label"
+                ><i class="fa-solid fa-trophy"></i> Título del Juego</label
+              >
+              <div class="control">
+                <input
+                  id="game-title-input"
+                  class="input"
+                  type="text"
+                  value="JUEGO 1"
+                  placeholder="Ej. JUEGO 1, SEMIFINAL, FINAL"
+                />
+              </div>
+            </div>
+
+            <!-- Hora del Enfrentamiento -->
+            <div class="config-field">
+              <label class="label"
+                ><i class="fa-regular fa-clock"></i> Hora del Encuentro</label
+              >
+              <div class="control has-icons-left">
+                <input
+                  id="game-time-input"
+                  class="input"
+                  type="text"
+                  value="07:00 PM"
+                  placeholder="Ej. 07:00 PM, 08:30 PM"
+                />
+                <span class="icon is-small is-left">
+                  <i class="fa-solid fa-stopwatch text-orange"></i>
+                </span>
+              </div>
+            </div>
+
+            <!-- Fecha del Encuentro -->
+            <div class="config-field">
+              <label class="label"
+                ><i class="fa-regular fa-calendar"></i> Fecha</label
+              >
+              <div class="control">
+                <input id="game-date-input" class="input" type="date" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- B. ARENA VISUAL VERSUS (INSPIRADO EN LA IMAGEN DE REFERENCIA) -->
+        <div
+          class="field full-width versus-arena-container"
+          id="versus-arena-box"
+        >
+          <!-- BANNER SUPERIOR DEL JUEGO (IGUAL A LA IMAGEN DE REFERENCIA) -->
+          <div class="arena-top-banner">
+            <div class="arena-banner-badge">
+              <i class="fa-solid fa-fire"></i>
+              <span id="arena-header-banner-text">JUEGO 1 - 07:00 PM</span>
+            </div>
+          </div>
+
+          <!-- CUADRILÁTERO / CANCHA DE ENFRENTAMIENTO -->
+          <div class="versus-arena-grid">
+            <!-- LADO IZQUIERDO: EQUIPO A (LOCAL) -->
+            <div class="team-arena-box team-side-a" id="team-card-a">
+              <div class="team-side-header">
+                <span class="side-indicator local-indicator">
+                  <i class="fa-solid fa-shield-halved"></i> EQUIPO A (LOCAL)
+                </span>
+                <button
+                  type="button"
+                  class="button is-small is-danger is-outlined"
+                  id="btn-clear-team-a"
+                  style="display: none"
+                >
+                  <i class="fa-solid fa-xmark"></i> Cambiar
+                </button>
+              </div>
+
+              <!-- Búsqueda en la Hoja Afiliados -->
+              <div class="team-search-box">
+                <label class="team-search-label">
+                  <i class="fa-solid fa-magnifying-glass"></i> Buscar en
+                  Afiliados por:
+                </label>
+                <div class="field has-addons">
+                  <div class="control">
+                    <div class="select is-small">
+                      <select id="search-key-team-a">
+                        <option value="RIF">RIF / Cédula</option>
+                        <option value="ID">ID Registro</option>
+                        <option value="NombreCompleto">Nombre</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="control is-expanded">
+                    <input
+                      id="search-team-a"
+                      class="input is-small"
+                      type="text"
+                      placeholder="Código o RIF..."
+                    />
+                  </div>
+                  <div class="control">
+                    <button
+                      type="button"
+                      class="button is-small is-info"
+                      id="btn-search-team-a"
+                    >
+                      <i class="fa-solid fa-search"></i>
+                    </button>
+                  </div>
+                </div>
+                <div
+                  class="search-status-text"
+                  id="search-status-a"
+                  style="display: none"
+                ></div>
+              </div>
+
+              <!-- Logo PNG de la Hoja Afiliados (FileLink) -->
+              <div class="team-logo-display" id="team-logo-a">
+                <div class="logo-empty-state side-a">
+                  <i class="fa-solid fa-user-plus"></i>
+                  <span>Buscar Equipo A</span>
+                </div>
+              </div>
+
+              <!-- Datos Consultados de la Hoja Afiliados -->
+              <div class="team-details-card">
+                <h4 class="team-display-name" id="team-name-a">
+                  Seleccione Equipo Local
+                </h4>
+                <div class="team-info-pills">
+                  <div class="info-pill">
+                    <span class="pill-label">ID:</span>
+                    <span class="pill-value" id="team-id-a">--</span>
+                  </div>
+                  <div class="info-pill">
+                    <span class="pill-label">Sector:</span>
+                    <span class="pill-value" id="team-code-a">--</span>
+                  </div>
+                </div>
+                <div class="team-sub-rif" id="team-rif-a"></div>
+              </div>
+            </div>
+
+            <!-- CENTRO: EMBLEMA VS EN LLAMAS, BALONES Y MARCADOR DE PUNTOS -->
+            <div class="versus-center-emblem">
+              <div class="versus-fire-ring">
+                <i class="fa-solid fa-basketball vs-ball-spark-left"></i>
+                <div class="vs-fiery-title">
+                  <span class="vs-v">V</span>
+                  <span class="vs-s">S</span>
+                </div>
+                <i class="fa-solid fa-basketball vs-ball-spark-right"></i>
+              </div>
+              <div class="versus-time-indicator">
+                <i class="fa-solid fa-bolt"></i>
+                <span>MATCH ARENA</span>
+              </div>
+
+              <!-- PANEL DE PUNTUACIÓN / MARCADOR PARA ASIGNAR O MODIFICAR PUNTOS -->
+              <div class="matchup-score-editor">
+                <div class="score-editor-header">
+                  <i class="fa-solid fa-calculator text-orange"></i>
+                  <span>Puntuación del Juego</span>
+                </div>
+                <div class="score-editor-controls">
+                  <div class="score-input-item">
+                    <span class="score-item-tag local">LOCAL</span>
+                    <input
+                      type="number"
+                      id="game-score-a-input"
+                      class="input score-number-input"
+                      min="0"
+                      value="0"
+                      placeholder="0"
+                      title="Puntos Equipo Local (A)"
+                    />
+                  </div>
+                  <span class="score-item-vs">-</span>
+                  <div class="score-input-item">
+                    <span class="score-item-tag visitor">VISITANTE</span>
+                    <input
+                      type="number"
+                      id="game-score-b-input"
+                      class="input score-number-input"
+                      min="0"
+                      value="0"
+                      placeholder="0"
+                      title="Puntos Equipo Visitante (B)"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- LADO DERECHO: EQUIPO B (VISITANTE) -->
+            <div class="team-arena-box team-side-b" id="team-card-b">
+              <div class="team-side-header">
+                <span class="side-indicator visitor-indicator">
+                  <i class="fa-solid fa-shield-halved"></i> EQUIPO B (VISITANTE)
+                </span>
+                <button
+                  type="button"
+                  class="button is-small is-danger is-outlined"
+                  id="btn-clear-team-b"
+                  style="display: none"
+                >
+                  <i class="fa-solid fa-xmark"></i> Cambiar
+                </button>
+              </div>
+
+              <!-- Búsqueda en la Hoja Afiliados -->
+              <div class="team-search-box">
+                <label class="team-search-label">
+                  <i class="fa-solid fa-magnifying-glass"></i> Buscar en
+                  Afiliados por:
+                </label>
+                <div class="field has-addons">
+                  <div class="control">
+                    <div class="select is-small">
+                      <select id="search-key-team-b">
+                        <option value="RIF">RIF / Cédula</option>
+                        <option value="ID">ID Registro</option>
+                        <option value="NombreCompleto">Nombre</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="control is-expanded">
+                    <input
+                      id="search-team-b"
+                      class="input is-small"
+                      type="text"
+                      placeholder="Código o RIF..."
+                    />
+                  </div>
+                  <div class="control">
+                    <button
+                      type="button"
+                      class="button is-small is-info"
+                      id="btn-search-team-b"
+                    >
+                      <i class="fa-solid fa-search"></i>
+                    </button>
+                  </div>
+                </div>
+                <div
+                  class="search-status-text"
+                  id="search-status-b"
+                  style="display: none"
+                ></div>
+              </div>
+
+              <!-- Logo PNG de la Hoja Afiliados (FileLink) -->
+              <div class="team-logo-display" id="team-logo-b">
+                <div class="logo-empty-state side-b">
+                  <i class="fa-solid fa-user-plus"></i>
+                  <span>Buscar Equipo B</span>
+                </div>
+              </div>
+
+              <!-- Datos Consultados de la Hoja Afiliados -->
+              <div class="team-details-card">
+                <h4 class="team-display-name" id="team-name-b">
+                  Seleccione Equipo Visitante
+                </h4>
+                <div class="team-info-pills">
+                  <div class="info-pill">
+                    <span class="pill-label">ID:</span>
+                    <span class="pill-value" id="team-id-b">--</span>
+                  </div>
+                  <div class="info-pill">
+                    <span class="pill-label">Sector:</span>
+                    <span class="pill-value" id="team-code-b">--</span>
+                  </div>
+                </div>
+                <div class="team-sub-rif" id="team-rif-b"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Observaciones / Notas Opcionales del Encuentro -->
+          <div class="arena-notes-section">
+            <label class="label"
+              ><i class="fa-solid fa-comment-dots"></i> Observaciones del
+              Encuentro (Opcional)</label
+            >
+            <input
+              id="game-notes-input"
+              class="input is-small"
+              type="text"
+              placeholder="Ej. Cancha 1, Fase de Grupos, Jornada 3, etc."
+            />
+          </div>
+
+          <!-- =========================================================================
+             PASO 1 (HTML): CONFIGURACIÓN DE HOJA PARA EL CUERPO TÉCNICO / ÁRBITROS
+             Para cambiar la hoja de donde se consultan los árbitros, modifica el 'value'
+             del siguiente input oculto (por defecto: "CuerpoTecnico").
+             ========================================================================= -->
+          <input type="hidden" id="refereesSheetTarget" value="CuerpoTecnico" />
+
+          <!-- =========================================================================
+             PASO 2 (HTML): 3 MÓDULOS DE ÁRBITROS (SIMÉTRICOS Y ALINEADOS AL 100%)
+             Cada módulo consulta la hoja 'CuerpoTecnico' por Cédula, RIF, ID o Nombre.
+             ========================================================================= -->
+          <div class="referees-section-container">
+            <div class="referees-section-header">
+              <div class="referees-section-title">
+                <i class="fa-solid fa-user-shield"></i>
+                <span>Cuerpo Arbitral / Jueces del Encuentro</span>
+              </div>
+              <span class="referees-sheet-badge">
+                <i class="fa-solid fa-table"></i> Hoja:
+                <strong id="referees-sheet-label">CuerpoTecnico</strong>
+              </span>
+            </div>
+
+            <div class="referees-grid">
+              <!-- MÓDULO 1: ÁRBITRO 1 (PRINCIPAL) -->
+              <div class="referee-card" id="referee-card-1">
+                <div class="referee-card-header">
+                  <span class="referee-badge principal">
+                    <i class="fa-solid fa-whistle"></i> ÁRBITRO 1 (PRINCIPAL)
+                  </span>
+                  <button
+                    type="button"
+                    class="button is-small is-danger is-outlined btn-clear-referee"
+                    id="btn-clear-referee-1"
+                    style="display: none"
+                  >
+                    <i class="fa-solid fa-xmark"></i> Cambiar
+                  </button>
+                </div>
+
+                <!-- Buscador en CuerpoTecnico -->
+                <div class="referee-search-box">
+                  <label class="referee-search-label">
+                    <i class="fa-solid fa-magnifying-glass"></i> Consultar por:
+                  </label>
+                  <div class="field has-addons">
+                    <div class="control">
+                      <div class="select is-small">
+                        <select id="search-key-referee-1">
+                          <option value="Cedula" selected>Cédula</option>
+                          <option value="RIF">RIF</option>
+                          <option value="ID">ID</option>
+                          <option value="NombreCompleto">Nombre</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="control is-expanded">
+                      <input
+                        id="search-referee-1"
+                        class="input is-small"
+                        type="text"
+                        placeholder="Cédula, RIF o ID..."
+                      />
+                    </div>
+                    <div class="control">
+                      <button
+                        type="button"
+                        class="button is-small is-primary btn-search-ref"
+                        id="btn-search-referee-1"
+                        title="Buscar en CuerpoTecnico"
+                      >
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div
+                    class="search-status-text"
+                    id="search-status-referee-1"
+                    style="display: none"
+                  ></div>
+                </div>
+
+                <!-- Visualizador de Foto / Avatar del Árbitro -->
+                <div class="referee-photo-display" id="referee-photo-1">
+                  <div class="referee-empty-state">
+                    <i class="fa-solid fa-user-plus"></i>
+                    <span>Buscar Árbitro 1</span>
+                  </div>
+                </div>
+
+                <!-- Datos Consultados del Árbitro -->
+                <div class="referee-details-card">
+                  <h5 class="referee-display-name" id="referee-name-1">
+                    Sin Árbitro Asignado
+                  </h5>
+                  <div class="referee-info-pills">
+                    <div class="info-pill">
+                      <span class="pill-label">Cédula:</span>
+                      <span class="pill-value" id="referee-cedula-1">--</span>
+                    </div>
+                    <div class="info-pill">
+                      <span class="pill-label">Rol:</span>
+                      <span class="pill-value" id="referee-role-1">--</span>
+                    </div>
+                  </div>
+                  <div class="referee-sub-id" id="referee-id-1"></div>
+                </div>
+              </div>
+
+              <!-- MÓDULO 2: ÁRBITRO 2 (AUXILIAR 1) -->
+              <div class="referee-card" id="referee-card-2">
+                <div class="referee-card-header">
+                  <span class="referee-badge auxiliar">
+                    <i class="fa-solid fa-whistle"></i> ÁRBITRO 2 (AUXILIAR 1)
+                  </span>
+                  <button
+                    type="button"
+                    class="button is-small is-danger is-outlined btn-clear-referee"
+                    id="btn-clear-referee-2"
+                    style="display: none"
+                  >
+                    <i class="fa-solid fa-xmark"></i> Cambiar
+                  </button>
+                </div>
+
+                <!-- Buscador en CuerpoTecnico -->
+                <div class="referee-search-box">
+                  <label class="referee-search-label">
+                    <i class="fa-solid fa-magnifying-glass"></i> Consultar por:
+                  </label>
+                  <div class="field has-addons">
+                    <div class="control">
+                      <div class="select is-small">
+                        <select id="search-key-referee-2">
+                          <option value="Cedula" selected>Cédula</option>
+                          <option value="RIF">RIF</option>
+                          <option value="ID">ID</option>
+                          <option value="NombreCompleto">Nombre</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="control is-expanded">
+                      <input
+                        id="search-referee-2"
+                        class="input is-small"
+                        type="text"
+                        placeholder="Cédula, RIF o ID..."
+                      />
+                    </div>
+                    <div class="control">
+                      <button
+                        type="button"
+                        class="button is-small is-primary btn-search-ref"
+                        id="btn-search-referee-2"
+                        title="Buscar en CuerpoTecnico"
+                      >
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div
+                    class="search-status-text"
+                    id="search-status-referee-2"
+                    style="display: none"
+                  ></div>
+                </div>
+
+                <!-- Visualizador de Foto / Avatar del Árbitro -->
+                <div class="referee-photo-display" id="referee-photo-2">
+                  <div class="referee-empty-state">
+                    <i class="fa-solid fa-user-plus"></i>
+                    <span>Buscar Árbitro 2</span>
+                  </div>
+                </div>
+
+                <!-- Datos Consultados del Árbitro -->
+                <div class="referee-details-card">
+                  <h5 class="referee-display-name" id="referee-name-2">
+                    Sin Árbitro Asignado
+                  </h5>
+                  <div class="referee-info-pills">
+                    <div class="info-pill">
+                      <span class="pill-label">Cédula:</span>
+                      <span class="pill-value" id="referee-cedula-2">--</span>
+                    </div>
+                    <div class="info-pill">
+                      <span class="pill-label">Rol:</span>
+                      <span class="pill-value" id="referee-role-2">--</span>
+                    </div>
+                  </div>
+                  <div class="referee-sub-id" id="referee-id-2"></div>
+                </div>
+              </div>
+
+              <!-- MÓDULO 3: ÁRBITRO 3 (AUXILIAR 2 / MESA) -->
+              <div class="referee-card" id="referee-card-3">
+                <div class="referee-card-header">
+                  <span class="referee-badge mesa">
+                    <i class="fa-solid fa-whistle"></i> ÁRBITRO 3 (MESA / AUX 2)
+                  </span>
+                  <button
+                    type="button"
+                    class="button is-small is-danger is-outlined btn-clear-referee"
+                    id="btn-clear-referee-3"
+                    style="display: none"
+                  >
+                    <i class="fa-solid fa-xmark"></i> Cambiar
+                  </button>
+                </div>
+
+                <!-- Buscador en CuerpoTecnico -->
+                <div class="referee-search-box">
+                  <label class="referee-search-label">
+                    <i class="fa-solid fa-magnifying-glass"></i> Consultar por:
+                  </label>
+                  <div class="field has-addons">
+                    <div class="control">
+                      <div class="select is-small">
+                        <select id="search-key-referee-3">
+                          <option value="Cedula" selected>Cédula</option>
+                          <option value="RIF">RIF</option>
+                          <option value="ID">ID</option>
+                          <option value="NombreCompleto">Nombre</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="control is-expanded">
+                      <input
+                        id="search-referee-3"
+                        class="input is-small"
+                        type="text"
+                        placeholder="Cédula, RIF o ID..."
+                      />
+                    </div>
+                    <div class="control">
+                      <button
+                        type="button"
+                        class="button is-small is-primary btn-search-ref"
+                        id="btn-search-referee-3"
+                        title="Buscar en CuerpoTecnico"
+                      >
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div
+                    class="search-status-text"
+                    id="search-status-referee-3"
+                    style="display: none"
+                  ></div>
+                </div>
+
+                <!-- Visualizador de Foto / Avatar del Árbitro -->
+                <div class="referee-photo-display" id="referee-photo-3">
+                  <div class="referee-empty-state">
+                    <i class="fa-solid fa-user-plus"></i>
+                    <span>Buscar Árbitro 3</span>
+                  </div>
+                </div>
+
+                <!-- Datos Consultados del Árbitro -->
+                <div class="referee-details-card">
+                  <h5 class="referee-display-name" id="referee-name-3">
+                    Sin Árbitro Asignado
+                  </h5>
+                  <div class="referee-info-pills">
+                    <div class="info-pill">
+                      <span class="pill-label">Cédula:</span>
+                      <span class="pill-value" id="referee-cedula-3">--</span>
+                    </div>
+                    <div class="info-pill">
+                      <span class="pill-label">Rol:</span>
+                      <span class="pill-value" id="referee-role-3">--</span>
+                    </div>
+                  </div>
+                  <div class="referee-sub-id" id="referee-id-3"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===================================================================
+           C. BOTONES DE ACCIÓN: GUARDAR, AGREGAR OTRO Y REINICIAR
+           =================================================================== -->
+        <div class="field full-width matchup-actions-bar">
+          <div class="actions-grid">
+            <!-- Botón Guardar Enfrentamiento -->
+            <button
+              class="button is-primary is-medium action-btn-save"
+              type="button"
+              id="btn-save-matchup"
+            >
+              <i class="fa-solid fa-floppy-disk"></i> Guardar Enfrentamiento
+            </button>
+
+            <!-- Botón Agregar Nuevo Enfrentamiento Debajo -->
+            <button
+              class="button is-info is-medium action-btn-add"
+              type="button"
+              id="btn-add-another-matchup"
+            >
+              <i class="fa-solid fa-circle-plus"></i> ➕ Agregar Otro
+              Enfrentamiento
+            </button>
+
+            <!-- Botón Reiniciar Formulario -->
+            <button
+              class="button is-light is-medium"
+              type="button"
+              id="btn-reset-draft"
+            >
+              <i class="fa-solid fa-rotate-left"></i> Limpiar
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- FIN DE #matchup-creation-section -->
+
+      <!-- ===================================================================
+           D. CARTELERA DE ENFRENTAMIENTOS REGISTRADOS (CON ACCIONES MODIFICAR Y ELIMINAR)
+           =================================================================== -->
+      <div
+        class="field full-width matchup-board-section"
+        id="matchup-board-section"
+      >
+        <div class="board-header-bar">
+          <div class="board-title">
+            <i class="fa-solid fa-list-check"></i>
+            <h3>Cartelera de Enfrentamientos</h3>
+            <span class="badge-count" id="matchups-count-badge">0 Juegos</span>
+          </div>
+          <div class="board-header-actions">
+            <!-- Botones de Exportación (CSV, EXCEL, PDF) -->
+            <div class="export-actions-cluster">
+              <button
+                class="button is-small btn-export-pdf"
+                type="button"
+                id="btn-export-pdf"
+                title="Exportar cartelera publicada a PDF con fotos y diseño"
+              >
+                <i class="fa-solid fa-file-pdf"></i> Exportar PDF
+              </button>
+              <button
+                class="button is-small btn-export-excel"
+                type="button"
+                id="btn-export-excel"
+                title="Exportar cartelera a Excel (.xlsx)"
+              >
+                <i class="fa-solid fa-file-excel"></i> Excel
+              </button>
+              <button
+                class="button is-small btn-export-csv"
+                type="button"
+                id="btn-export-csv"
+                title="Exportar cartelera a formato CSV"
+              >
+                <i class="fa-solid fa-file-csv"></i> CSV
+              </button>
+            </div>
+            <!-- Botón de Sincronización Google Sheets -->
+            <button
+              class="button is-small is-warning is-outlined"
+              type="button"
+              id="btn-sync-sheets"
+              title="Sincronizar enfrentamientos con la hoja Game de Google Sheets (Requiere Administrador)"
+            >
+              <i class="fa-solid fa-file-excel"></i> Sincronizar Sheets
+            </button>
+            <!-- Botón Guardar en Servidor / Nube (Acceso global desde cualquier IP, PC, Tlf, Tablet) -->
+            <button
+              class="button is-small is-success btn-cloud-save"
+              type="button"
+              id="btn-save-cloud"
+              title="Guardar la cartelera en la nube para que cualquier computadora, teléfono o tablet en otra IP pueda ver los juegos (Requiere Administrador)"
+            >
+              <i class="fa-solid fa-cloud-arrow-up"></i> Guardar Cartelera en
+              Nube
+            </button>
+            <!-- Botón Cargar / Refrescar desde la Nube -->
+            <button
+              class="button is-small is-info is-outlined btn-cloud-reload"
+              type="button"
+              id="btn-reload-cloud"
+              title="Cargar los últimos juegos guardados en la nube (Requiere Administrador)"
+            >
+              <i class="fa-solid fa-arrows-rotate"></i> Cargar de Nube
+            </button>
+            <!-- Indicador Visual de Estado de Sincronización en Nube -->
+            <div
+              class="cloud-sync-status-indicator status-idle"
+              id="cloud-sync-status-indicator"
+              title="Estado de sincronización con la nube"
+            >
+              <span class="status-dot"></span>
+              <span class="status-text" id="cloud-status-text">Listo</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contenedor Dinámico de Tarjetas de Enfrentamientos -->
+        <div id="matchups-list-container" class="matchups-cards-grid">
+          <div class="empty-matchups-box">
+            <i class="fa-solid fa-trophy"></i>
+            <h4>No hay enfrentamientos guardados aún</h4>
+            <p>
+              Selecciona el modo
+              <strong>"Ingresar (Crear nuevo registro)"</strong> para armar la
+              cartelera de juegos.
+            </p>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <!-- =========================================================================
+         6. CAJA DE MENSAJES Y NOTIFICACIONES DE ESTADO
+         ========================================================================= -->
+    <div id="message"></div>
+
+    <!-- =========================================================================
+         MODAL DE AUTORIZACIÓN DE ADMINISTRADOR (USUARIO Y CONTRASEÑA)
+         Se activa para: Modificar, Eliminar e Ingresar (Crear nuevo registro)
+         ========================================================================= -->
+    <div class="modal custom-admin-modal" id="admin-auth-modal">
+      <div class="modal-background" id="admin-auth-backdrop"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <div class="modal-card-title">
+            <i class="fa-solid fa-user-shield text-orange"></i>
+            <span>Acceso de Administrador</span>
+          </div>
+          <button
+            type="button"
+            class="delete"
+            aria-label="close"
+            id="btn-close-admin-modal"
+          ></button>
+        </header>
+        <section class="modal-card-body">
+          <div class="admin-auth-icon-badge">
+            <i class="fa-solid fa-lock"></i>
+          </div>
+          <p class="admin-auth-instruction">
+            Esta acción requiere autorización. Por favor ingrese sus
+            credenciales de administrador para continuar:
+          </p>
+
+          <div class="field">
+            <label class="label"
+              ><i class="fa-solid fa-user"></i> Usuario Administrador</label
+            >
+            <div class="control has-icons-left">
+              <input
+                id="admin-username-input"
+                class="input"
+                type="text"
+                placeholder="Usuario (ej. Oso)"
+                autocomplete="username"
+              />
+              <span class="icon is-small is-left">
+                <i class="fa-solid fa-user-tie text-orange"></i>
+              </span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label"
+              ><i class="fa-solid fa-key"></i> Contraseña</label
+            >
+            <div class="control has-icons-left has-icons-right">
+              <input
+                id="admin-password-input"
+                class="input"
+                type="password"
+                placeholder="Contraseña (ej. 123456)"
+                autocomplete="current-password"
+              />
+              <span class="icon is-small is-left">
+                <i class="fa-solid fa-lock text-orange"></i>
+              </span>
+              <button
+                type="button"
+                class="btn-toggle-pwd"
+                id="btn-toggle-admin-pwd"
+                title="Mostrar/Ocultar contraseña"
+                tabindex="-1"
+              >
+                <i class="fa-solid fa-eye" id="icon-toggle-pwd"></i>
+              </button>
+            </div>
+          </div>
+
+          <div
+            id="admin-auth-error"
+            class="admin-auth-error-msg"
+            style="display: none"
+          >
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <span id="admin-auth-error-text"
+              >Usuario o contraseña incorrectos.</span
+            >
+          </div>
+        </section>
+        <footer class="modal-card-foot">
+          <button
+            type="button"
+            class="button is-primary"
+            id="btn-confirm-admin-auth"
+          >
+            <i class="fa-solid fa-unlock"></i> Validar Acceso
+          </button>
+          <button
+            type="button"
+            class="button is-light"
+            id="btn-cancel-admin-auth"
+          >
+            Cancelar
+          </button>
+        </footer>
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         MODAL: CAMBIAR ESTATUS DEL JUEGO (PROGRAMADO / POSPUESTO / FINALIZADO)
+         ========================================================================= -->
+    <div class="modal custom-admin-modal" id="matchup-status-modal">
+      <div class="modal-background" id="matchup-status-backdrop"></div>
+      <div class="modal-card admin-auth-card matchup-status-modal-card">
+        <header class="modal-card-head">
+          <div class="modal-card-title">
+            <i class="fa-solid fa-flag text-orange"></i>
+            <span>Cambiar Estatus del Juego</span>
+          </div>
+          <button
+            type="button"
+            class="delete"
+            aria-label="close"
+            id="btn-close-status-modal"
+          ></button>
+        </header>
+        <section class="modal-card-body">
+          <div class="admin-auth-icon-badge">
+            <i class="fa-solid fa-flag"></i>
+          </div>
+
+          <div class="status-modal-game-info" id="status-modal-game-info">
+            <div class="status-modal-game-title" id="status-modal-title">
+              JUEGO 1
+            </div>
+            <div
+              class="status-modal-game-matchup"
+              id="status-modal-matchup-names"
+            >
+              Equipo Local vs Equipo Visitante
+            </div>
+          </div>
+
+          <p class="admin-auth-instruction">
+            Selecciona el nuevo estatus para este juego:
+          </p>
+
+          <div class="status-options-grid">
+            <!-- Opción 1: Programado (Azul Neón) -->
+            <label
+              class="status-option-card option-programado"
+              for="status-radio-programado"
+            >
+              <input
+                type="radio"
+                name="matchup_status_choice"
+                id="status-radio-programado"
+                value="programado"
+                checked
+              />
+              <div class="status-option-content">
+                <div class="game-status-pill status-programado">
+                  <span class="status-dot"></span>
+                  <span class="status-label">Programado</span>
+                </div>
+                <p class="status-desc">
+                  El juego está pautado y confirmado según la hora programada.
+                </p>
+              </div>
+              <i class="fa-solid fa-circle-check status-check-icon"></i>
+            </label>
+
+            <!-- Opción 2: Pospuesto (Naranja Neón) -->
+            <label
+              class="status-option-card option-pospuesto"
+              for="status-radio-pospuesto"
+            >
+              <input
+                type="radio"
+                name="matchup_status_choice"
+                id="status-radio-pospuesto"
+                value="pospuesto"
+              />
+              <div class="status-option-content">
+                <div class="game-status-pill status-pospuesto">
+                  <span class="status-dot"></span>
+                  <span class="status-label">Pospuesto</span>
+                </div>
+                <p class="status-desc">
+                  El juego ha sido reprogramado o suspendido temporalmente.
+                </p>
+              </div>
+              <i class="fa-solid fa-circle-check status-check-icon"></i>
+            </label>
+
+            <!-- Opción 3: Finalizado (Rojo Neón) -->
+            <label
+              class="status-option-card option-finalizado"
+              for="status-radio-finalizado"
+            >
+              <input
+                type="radio"
+                name="matchup_status_choice"
+                id="status-radio-finalizado"
+                value="finalizado"
+              />
+              <div class="status-option-content">
+                <div class="game-status-pill status-finalizado">
+                  <span class="status-dot"></span>
+                  <span class="status-label">Finalizado</span>
+                </div>
+                <p class="status-desc">
+                  El juego concluyó y el marcador es oficial y definitivo.
+                </p>
+              </div>
+              <i class="fa-solid fa-circle-check status-check-icon"></i>
+            </label>
+          </div>
+        </section>
+        <footer class="modal-card-foot">
+          <button
+            type="button"
+            class="button is-primary"
+            id="btn-save-status-modal"
+          >
+            <i class="fa-solid fa-floppy-disk"></i> Guardar Estatus
+          </button>
+          <button
+            type="button"
+            class="button is-light"
+            id="btn-cancel-status-modal"
+          >
+            Cancelar
+          </button>
+        </footer>
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         MODAL: SELECCIÓN DE ORIENTACIÓN PARA EXPORTAR A PDF (HORIZONTAL / VERTICAL)
+         ========================================================================= -->
+    <div class="modal custom-admin-modal" id="pdf-orientation-modal">
+      <div class="modal-background" id="pdf-orientation-backdrop"></div>
+      <div class="modal-card admin-auth-card pdf-orientation-modal-card">
+        <header class="modal-card-head">
+          <div class="modal-card-title">
+            <i class="fa-solid fa-file-pdf text-orange"></i>
+            <span>Exportar Cartelera a PDF</span>
+          </div>
+          <button
+            type="button"
+            class="delete"
+            aria-label="close"
+            id="btn-close-pdf-modal"
+          ></button>
+        </header>
+        <section class="modal-card-body">
+          <div class="admin-auth-icon-badge">
+            <i class="fa-solid fa-file-pdf"></i>
+          </div>
+
+          <p class="admin-auth-instruction">
+            Selecciona la orientación de la hoja para generar el documento PDF:
+          </p>
+
+          <div class="orientation-options-grid">
+            <!-- Opción 1: Horizontal (Landscape) -->
+            <label
+              class="orientation-option-card option-landscape"
+              for="pdf-orient-landscape"
+            >
+              <input
+                type="radio"
+                name="pdf_export_orientation"
+                id="pdf-orient-landscape"
+                value="landscape"
+                checked
+              />
+              <div class="orientation-option-icon">
+                <i class="fa-solid fa-panorama"></i>
+              </div>
+              <div class="orientation-option-content">
+                <div class="orientation-title">
+                  <span>Horizontal (Landscape)</span>
+                  <span class="orientation-badge badge-popular"
+                    >Recomendado</span
+                  >
+                </div>
+                <p class="orientation-desc">
+                  Hoja ancha A4 (panorámica). Distribución idéntica a la
+                  cartelera deportiva con alta resolución y espacio para 2
+                  juegos por página.
+                </p>
+              </div>
+              <i class="fa-solid fa-circle-check orientation-check-icon"></i>
+            </label>
+
+            <!-- Opción 2: Vertical (Portrait) -->
+            <label
+              class="orientation-option-card option-portrait"
+              for="pdf-orient-portrait"
+            >
+              <input
+                type="radio"
+                name="pdf_export_orientation"
+                id="pdf-orient-portrait"
+                value="portrait"
+              />
+              <div class="orientation-option-icon">
+                <i class="fa-solid fa-file-lines"></i>
+              </div>
+              <div class="orientation-option-content">
+                <div class="orientation-title">
+                  <span>Vertical (Portrait)</span>
+                  <span class="orientation-badge badge-classic">Estándar</span>
+                </div>
+                <p class="orientation-desc">
+                  Hoja vertical A4 tradicional. Ideal para impresoras
+                  convencionales, carpetas físicas y visualización vertical en
+                  celulares o tablets.
+                </p>
+              </div>
+              <i class="fa-solid fa-circle-check orientation-check-icon"></i>
+            </label>
+          </div>
+        </section>
+        <footer class="modal-card-foot">
+          <button
+            type="button"
+            class="button is-primary"
+            id="btn-confirm-pdf-export"
+          >
+            <i class="fa-solid fa-download"></i> Generar y Descargar PDF
+          </button>
+          <button
+            type="button"
+            class="button is-light"
+            id="btn-cancel-pdf-modal"
+          >
+            Cancelar
+          </button>
+        </footer>
+      </div>
+    </div>
+
+    <!-- Pie de página / Estado del sistema -->
+    <footer class="app-footer">
+      <p>
+        Sistema de Gestión y Consulta Dinámica • Conectado a Google Sheets &
+        Google Drive
+      </p>
+    </footer>
+
+    <!-- =========================================================================
+         7. LIBRERÍAS EXTERNAS Y CONTROLADOR JAVASCRIPT COMPARTIDO
+         ========================================================================= -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <!-- ARCHIVO JAVASCRIPT PRINCIPAL VINCULADO -->
+    <script src="/Afiliados/Afiliados.js"></script>
+    <!-- CONTROLADOR DEL MÓDULO VERSUS (EQUIPO A VS EQUIPO B) -->
+    <script src="Game.js"></script>
+    <!-- MÓDULO DE EXPORTACIÓN (CSV, EXCEL, PDF) -->
+    <script src="Exportacion.js"></script>
+  </body>
+</html>

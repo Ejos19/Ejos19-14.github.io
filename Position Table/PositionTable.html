@@ -1,0 +1,1158 @@
+<!doctype html>
+<html lang="es">
+  <head>
+        <link
+      href="/Asset/icono oso2.png"
+      rel="icon"
+      sizes="200x200"
+    />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tabla de Posiciones - Clasificación de Equipos (Game)</title>
+
+    <!-- Google Fonts optimizadas -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&family=Montserrat:ital,wght@0,800;0,900;1,900&family=Quicksand:wght@500;600;700&family=Russo+One&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Iconografía FontAwesome 6 -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <!-- Framework CSS Bulma -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
+
+    <!-- Librerías html2canvas y jsPDF para captura fiel en Alta Definición (Imagen PNG y PDF 1 Hoja) -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <!-- Estilos de la Tabla de Posiciones (Réplica visual Game.html / Naranja Neón Deportivo) -->
+    <link rel="stylesheet" href="PositionTable.css" />
+  </head>
+
+  <body>
+    <!-- =========================================================================
+         0. BARRA DE NAVEGACIÓN ENTRE FORMULARIOS (PESTAÑAS DE ACCESO RÁPIDO)
+         ========================================================================= -->
+    <!-- <nav class="app-navigation-tabs">
+      <div class="tabs-container">
+        <!- Pestaña 1: Formulario Afiliados ->
+        <a href="index.html" class="tab-item" id="tab-afiliados">
+          <i class="fa-solid fa-users-gear"></i>
+          <span>Afiliados</span>
+          <span class="tab-badge neon-blue-badge">1</span>
+        </a>
+
+        <!- Pestaña 2: Formulario Players (Add) ->
+        <a href="Add.html" class="tab-item" id="tab-add">
+          <i class="fa-solid fa-file-circle-plus"></i>
+          <span>Players</span>
+          <span class="tab-badge neon-green-badge">2</span>
+        </a>
+
+        <!- Pestaña 3: Formulario Game ->
+        <a href="Game.html" class="tab-item" id="tab-game">
+          <i class="fa-solid fa-gamepad"></i>
+          <span>Games</span>
+          <span class="tab-badge neon-orange-badge">3</span>
+        </a>
+
+        <!- Pestaña 4: History Games ->
+        <a href="HistoryGame.html" class="tab-item" id="tab-history">
+          <i class="fa-solid fa-clock-rotate-left"></i>
+          <span>History Games</span>
+          <span class="tab-badge neon-purple-badge">4</span>
+        </a>
+
+        <!- Pestaña 5: Tabla de Posiciones (ACTIVA) ->
+        <a href="PositionTable.html" class="tab-item active" id="tab-positions">
+          <i class="fa-solid fa-ranking-star"></i>
+          <span>Posiciones</span>
+          <span class="tab-badge neon-gold-badge">5</span>
+        </a>
+      </div>
+    </nav>-->
+
+    <!-- =========================================================================
+         1. HERO / ENCABEZADO PRINCIPAL DE LA APLICACIÓN
+         ========================================================================= -->
+    <section class="hero is-primary is-bold">
+      <div class="hero-body">
+        <div class="hero-header-content">
+          <div class="hero-logo-badge">
+            <i class="fa-solid fa-ranking-star"></i>
+          </div>
+          <div>
+            <h1 class="title">Tabla de Posiciones</h1>
+            <div class="hero-subtitle">
+              <span><i class="fa-solid fa-database"></i> Datos de Enfrentamientos (Hoja: Game)</span>
+              <span>•</span>
+              <span class="hero-badge-tag"><i class="fa-solid fa-circle-check"></i> Juegos Finalizados</span>
+              <div id="logo">
+                <img
+                  src="/Asset/icono oso2.png"
+                  alt="LogoPersonalizado"
+                  width="45"
+                  height="45"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         2. INDICADOR DE CONFIGURACIÓN ACTIVA (HOJA, CAMPO CLAVE Y MODO)
+         ========================================================================= -->
+    <div class="config-indicator-bar">
+      <div class="config-item">
+        <i class="fa-solid fa-table-cells"></i>
+        <span>Hoja Origen:</span>
+        <span class="config-chip orange" id="current-sheet-badge">Game</span>
+      </div>
+      <div class="config-item">
+        <i class="fa-solid fa-filter"></i>
+        <span>Criterio:</span>
+        <span class="config-chip emerald" id="current-criteria-badge">Estatus = Finalizado</span>
+      </div>
+      <div class="config-item">
+        <i class="fa-solid fa-cloud"></i>
+        <span>Estado Nube:</span>
+        <span class="config-chip purple" id="cloud-status-chip">
+          <i class="fa-solid fa-circle-notch fa-spin"></i> Sincronizando...
+        </span>
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         3. CONTENEDOR PRINCIPAL: TABLA DE POSICIONES
+         ========================================================================= -->
+    <div class="container versus-main-form" style="margin-top: 1.5rem">
+      <!-- Sección de Controles y Filtros -->
+      <div class="field full-width positions-toolbar-section">
+        <div class="board-header-bar">
+          <div class="board-title">
+            <i class="fa-solid fa-trophy text-gold"></i>
+            <h3>Clasificación General por Torneo</h3>
+            <span class="badge-count" id="teams-count-badge">0 Equipos</span>
+          </div>
+
+          <div class="board-header-actions">
+            <!-- Botón 1: Cargar Cartelera de la Nube (Referencia a Hoja Game) con autorización de Administrador -->
+            <button
+              class="button btn-action-main btn-reload-cloud-custom"
+              type="button"
+              id="btn-reload-cloud"
+              title="Consultar y sincronizar los enfrentamientos registrados en la hoja Game desde la nube"
+            >
+              <i class="fa-solid fa-arrows-rotate"></i>
+              <span>Cargar Cartelera de la Nube</span>
+            </button>
+
+            <!-- Botón 2: Enviar Datos a la Hoja PositionTable en la Nube con autorización de Administrador -->
+            <button
+              class="button btn-action-main btn-send-positions-custom"
+              type="button"
+              id="btn-send-positions"
+              title="Enviar y guardar la tabla de posiciones calculada directamente a la hoja PositionTable en Google Sheets"
+            >
+              <i class="fa-solid fa-cloud-arrow-up"></i>
+              <span>Enviar Datos a PositionTable</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Barra de Filtros: Selector por Torneo (ID_Tournament) y Buscador -->
+        <div class="positions-filter-bar">
+          <!-- Filtro Selector de Torneos (ID_Tournament) -->
+          <div class="filter-item filter-tournament-box">
+            <label class="filter-label" for="tournament-filter">
+              <i class="fa-solid fa-trophy text-orange"></i> Seleccionar Torneo (ID_Tournament):
+            </label>
+            <div class="control has-icons-left select-wrap">
+              <div class="select is-fullwidth custom-tournament-select">
+                <select id="tournament-filter">
+                  <option value="">🏆 Todos los Torneos Registrados</option>
+                </select>
+              </div>
+              <span class="icon is-small is-left">
+                <i class="fa-solid fa-award text-orange"></i>
+              </span>
+            </div>
+          </div>
+
+          <!-- Buscador en tiempo real de Equipos -->
+          <div class="filter-item filter-search-box">
+            <label class="filter-label" for="team-search-input">
+              <i class="fa-solid fa-magnifying-glass text-orange"></i> Buscar Equipo en la Tabla:
+            </label>
+            <div class="control has-icons-left">
+              <input
+                id="team-search-input"
+                class="input custom-search-input"
+                type="text"
+                placeholder="Escribe el nombre o ID del equipo..."
+              />
+              <span class="icon is-small is-left">
+                <i class="fa-solid fa-shield-halved text-orange"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tarjetas de Resumen del Torneo Seleccionado -->
+        <div class="tournament-summary-strip" id="tournament-summary-strip">
+          <div class="summary-card">
+            <div class="summary-icon"><i class="fa-solid fa-trophy"></i></div>
+            <div class="summary-info">
+              <span class="summary-label">TORNEO ACTIVO</span>
+              <span class="summary-val" id="summary-tourn-name">Todos los Torneos</span>
+            </div>
+          </div>
+
+          <div class="summary-card">
+            <div class="summary-icon"><i class="fa-solid fa-users"></i></div>
+            <div class="summary-info">
+              <span class="summary-label">EQUIPOS DISPUTANDO</span>
+              <span class="summary-val" id="summary-teams-count">0</span>
+            </div>
+          </div>
+
+          <div class="summary-card">
+            <div class="summary-icon"><i class="fa-solid fa-basketball"></i></div>
+            <div class="summary-info">
+              <span class="summary-label">JUEGOS FINALIZADOS</span>
+              <span class="summary-val" id="summary-games-count">0</span>
+            </div>
+          </div>
+
+          <div class="summary-card">
+            <div class="summary-icon"><i class="fa-solid fa-crown text-gold"></i></div>
+            <div class="summary-info">
+              <span class="summary-label">LÍDER ACTUAL</span>
+              <span class="summary-val leader-text" id="summary-leader-name">--</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- =======================================================================
+           4. TABLA DE POSICIONES PRINCIPAL (RÉPLICA EXACTA DE LA IMAGEN DE REFERENCIA)
+           ======================================================================= -->
+      <div class="positions-table-container-card">
+        <div class="table-responsive-wrapper">
+          <table class="positions-table" id="positions-table">
+            <thead>
+              <tr class="positions-header-row">
+                <th class="th-pos text-center">POS</th>
+                <th class="th-team text-left">EQUIPOS</th>
+                <th class="th-stat text-center" title="Juegos Jugados (JG + JP)">JJ</th>
+                <th class="th-stat text-center" title="Juegos Ganados">JG</th>
+                <th class="th-stat text-center" title="Juegos Perdidos">JP</th>
+                <th class="th-ptos text-center" title="Puntos Acumulados (3 Pts por Victoria)">PTOS</th>
+                <th class="th-stat text-center" title="Puntos a Favor Anotados">PF</th>
+                <th class="th-stat text-center" title="Puntos en Contra Recibidos">PC</th>
+                <th class="th-dif text-center" title="Diferencia de Puntos (PF - PC)">DIF</th>
+              </tr>
+            </thead>
+            <tbody id="positions-tbody">
+              <!-- Renderizado dinámico vía JavaScript -->
+              <tr>
+                <td colspan="9" class="table-loading-cell">
+                  <div class="table-empty-state">
+                    <i class="fa-solid fa-spinner fa-spin"></i>
+                    <p>Cargando datos de la hoja Game...</p>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Leyenda explicativa al pie de la tabla -->
+        <div class="positions-table-footer-legend">
+          <div class="legend-group">
+            <span class="legend-item">
+              <span class="legend-color-dot dot-blue"></span>
+              <strong>DIF Azul:</strong> Diferencia positiva (+ puntos a favor)
+            </span>
+            <span class="legend-item">
+              <span class="legend-color-dot dot-vinotinto"></span>
+              <strong>DIF Vinotinto:</strong> Diferencia negativa (- puntos en contra)
+            </span>
+            <span class="legend-item">
+              <span class="legend-color-dot dot-gold"></span>
+              <strong>PTOS:</strong> 3 puntos por juego ganado (JG)
+            </span>
+          </div>
+          <div class="legend-note">
+            <span><i class="fa-solid fa-circle-info"></i> Solo se computan enfrentamientos con Estatus <strong>"Finalizado"</strong> sin ID duplicados.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- =========================================================================
+           4B. ESTRUCTURA DE RONDA ELIMINATORIA (BRACKET DE PLAYOFFS / EUROBASKET)
+           =========================================================================
+           [COMENTARIOS FIJOS EXPLÍCITOS DE REFERENCIA A GOOGLE SHEETS]:
+           - HOJA CONSULTADA DE EQUIPOS: "Afiliados" (SHEET_CONFIG.AFILIADOS_SHEET)
+           - CAMPO CLAVE DE BÚSQUEDA:   "ID" (SHEET_CONFIG.AFILIADOS_KEY_COLUMN)
+           - CAMPOS RETORNADOS:
+             * Nombre del Equipo:        "NombreCompleto" (o "Nombre")
+             * Logo / Foto del Equipo:   "FileLink" (o "Foto", "Logo", "Avatar")
+             * Identificador del Equipo: "ID"
+           - SEGMENTOS DISPONIBLES:
+             * "Octavos de finales" (Octavos)
+             * "Cuartos de finales" (Cuartos)
+             * "Semifinal" (Semifinales)
+             * "Final" (Gran Final)
+           ========================================================================= -->
+      <div class="bracket-section-container" id="knockout-bracket-section">
+        <!-- Barra de Herramientas y Gestión del Cuadro Eliminatorio -->
+        <div class="bracket-control-toolbar">
+          <div class="bracket-title-box">
+            <div class="bracket-title-icon">
+              <i class="fa-solid fa-sitemap"></i>
+            </div>
+            <div>
+              <h2 class="bracket-main-title">Ronda Eliminatoria • Cuadro de PlayOffs</h2>
+              <div class="bracket-sub-info">
+                <span><i class="fa-solid fa-table-list"></i> Equipos vinculados de la Hoja: <strong>Afiliados</strong> (Campo: <strong>ID</strong>)</span>
+                <span>•</span>
+                <span><i class="fa-solid fa-layer-group"></i> Octavos • Cuartos • Semifinal • Final</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="bracket-actions-toolbar">
+            <!-- Botón 0: Desbloquear / Bloquear Edición de PlayOffs con Credenciales de Administrador -->
+            <button
+              type="button"
+              class="button btn-bracket-action btn-unlock-bracket"
+              id="btn-unlock-bracket"
+              title="Desbloquear edición del cuadro de PlayOffs con credenciales de administrador (Usuario y Contraseña)"
+            >
+              <i class="fa-solid fa-lock" id="icon-bracket-lock"></i>
+              <span id="text-bracket-lock">Desbloquear Edición</span>
+            </button>
+
+            <!-- Botón 1: Asignar Equipo por ID -->
+            <button
+              type="button"
+              class="button btn-bracket-action btn-add-team"
+              id="btn-open-assign-modal"
+              title="Buscar equipo por ID en la hoja Afiliados y asignarlo a una ronda del cuadro"
+            >
+              <i class="fa-solid fa-user-plus"></i>
+              <span>Asignar Equipo por ID</span>
+            </button>
+
+            <!-- Botón 2: Sembrar automáticamente desde la Tabla de Posiciones -->
+            <button
+              type="button"
+              class="button btn-bracket-action btn-seed-standings"
+              id="btn-seed-from-standings"
+              title="Llenar automáticamente los cruces de Octavos o Cuartos usando los equipos líderes de la tabla de posiciones"
+            >
+              <i class="fa-solid fa-wand-magic-sparkles"></i>
+              <span>Sembrar desde Tabla</span>
+            </button>
+
+            <!-- Selector de Segmento / Formato del Torneo -->
+            <div class="select-bracket-format-wrap">
+              <label for="bracket-format-select"><i class="fa-solid fa-sliders"></i> Segmento:</label>
+              <select id="bracket-format-select" class="bracket-select-input">
+                <option value="16">Octavos (16 Equipos)</option>
+                <option value="8">Cuartos (8 Equipos)</option>
+                <option value="4">Semifinales (4 Equipos)</option>
+                <option value="2">Gran Final (2 Equipos)</option>
+              </select>
+            </div>
+
+            <!-- Selector de ID de PlayOffs (Nuevo ID o Sobreescribir Existente) -->
+            <div class="select-bracket-id-wrap" id="bracket-id-selector-container" title="Seleccione un ID existente para sobreescribir o elija 'Nuevo ID' para crear un registro nuevo">
+              <label for="bracket-id-select"><i class="fa-solid fa-fingerprint text-purple"></i> ID PlayOffs:</label>
+              <select id="bracket-id-select" class="bracket-select-input bracket-id-select-box">
+                <option value="__NEW__">+ Nuevo ID (PO-0000001)</option>
+              </select>
+              <input
+                type="text"
+                id="bracket-id-input"
+                class="bracket-id-text-input"
+                placeholder="PO-0000001"
+                value="PO-0000001"
+                title="ID que se asignará al guardar en la hoja PlayOffs (formato PO-0000001)"
+              />
+              <button
+                type="button"
+                class="button btn-icon-small btn-refresh-id"
+                id="btn-refresh-playoff-id"
+                title="Consultar siguiente ID disponible en la hoja PlayOffs"
+              >
+                <i class="fa-solid fa-arrows-rotate"></i>
+              </button>
+              <span class="bracket-id-badge is-new" id="bracket-id-mode-badge" title="Estado del guardado por ID">NUEVO ID</span>
+            </div>
+
+            <!-- Botón Cargar PlayOffs por ID -->
+            <button
+              type="button"
+              class="button btn-bracket-action btn-load-bracket-custom"
+              id="btn-load-bracket"
+              title="Cargar y restaurar el cuadro de PlayOffs guardado según el campo ID seleccionado"
+            >
+              <i class="fa-solid fa-cloud-arrow-down"></i>
+              <span>Cargar PlayOffs por ID</span>
+            </button>
+
+            <!-- Botón 3: Guardar Cuadro en Hoja PlayOffs (1 Sola Fila por ID) -->
+            <button
+              type="button"
+              class="button btn-bracket-action btn-save-bracket"
+              id="btn-save-bracket"
+              title="Guardar PlayOffs en la hoja 'PlayOffs' en 1 sola fila con ID PO-0000001 (Sobreescribe si el ID ya existe)"
+            >
+              <i class="fa-solid fa-cloud-arrow-up"></i>
+              <span>Guardar en PlayOffs</span>
+            </button>
+
+            <!-- Botón 4: Captura de Pantalla en Imagen de Alta Resolución (PNG HD) -->
+            <button
+              type="button"
+              class="button btn-bracket-action btn-image-bracket"
+              id="btn-export-image-bracket"
+              title="Tomar captura de pantalla en alta resolución y descargar como imagen PNG del cuadro completo en una sola vista"
+            >
+              <i class="fa-solid fa-camera"></i>
+              <span>Descargar Imagen HD</span>
+            </button>
+
+            <!-- Botón 5: Descargar Cuadro en PDF Ajustado a 1 Sola Hoja -->
+            <button
+              type="button"
+              class="button btn-bracket-action btn-pdf-bracket"
+              id="btn-export-pdf-bracket"
+              title="Capturar pantalla y descargar el cuadro de PlayOffs ajustado exactamente a 1 sola hoja en formato PDF"
+            >
+              <i class="fa-solid fa-file-pdf"></i>
+              <span>Descargar PDF</span>
+            </button>
+
+            <!-- Botón 6: Limpiar Cuadro -->
+            <button
+              type="button"
+              class="button btn-bracket-action btn-reset-bracket"
+              id="btn-reset-bracket"
+              title="Reiniciar todos los equipos y marcadores del cuadro eliminatorio"
+            >
+              <i class="fa-solid fa-trash-can"></i>
+              <span>Limpiar</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- TABLERO VISUAL DE LA RONDA ELIMINATORIA (RÉPLICA FIEL DE LA IMAGEN DE REFERENCIA) -->
+        <div class="bracket-board-card">
+          <!-- Cabecera de Categorías / Segmentos -->
+          <div class="bracket-stages-header">
+            <!-- Lado Izquierdo: OCTAVOS, CUARTOS, SEMIFINALES -->
+            <div class="stage-col-header col-octavos-left">
+              <span class="stage-header-title">OCTAVOS</span>
+              <div class="stage-header-underline"></div>
+            </div>
+            <div class="stage-col-header col-cuartos-left">
+              <span class="stage-header-title">CUARTOS</span>
+              <div class="stage-header-underline"></div>
+            </div>
+            <div class="stage-col-header col-semis-left">
+              <span class="stage-header-title">SEMIFINALES</span>
+              <div class="stage-header-underline"></div>
+            </div>
+
+            <!-- Centro: LOGO DEL TORNEO, FINAL Y COPA -->
+            <div class="stage-col-header col-center-trophy">
+              <!-- Emblema del Torneo -->
+              <div class="tournament-center-emblem">
+                <div class="emblem-ball-art">
+                  <i class="fa-solid fa-basketball"></i>
+                </div>
+                <div class="emblem-year-tag">2026</div>
+                <div class="emblem-fiba-title">Liga-Antimano</div>
+                <div class="emblem-main-name">VERTICAL-SA</div>
+                <div class="emblem-location-sub">CCS | ANTIMANO | SANTA ANA |</div>
+              </div>
+            </div>
+
+            <!-- Lado Derecho: SEMIFINALES, CUARTOS, OCTAVOS -->
+            <div class="stage-col-header col-semis-right">
+              <span class="stage-header-title">SEMIFINALES</span>
+              <div class="stage-header-underline"></div>
+            </div>
+            <div class="stage-col-header col-cuartos-right">
+              <span class="stage-header-title">CUARTOS</span>
+              <div class="stage-header-underline"></div>
+            </div>
+            <div class="stage-col-header col-octavos-right">
+              <span class="stage-header-title">OCTAVOS</span>
+              <div class="stage-header-underline"></div>
+            </div>
+          </div>
+
+          <!-- CUERPO PRINCIPAL DEL BRACKET CON CONECTORES Y SLOTS -->
+          <div class="bracket-grid-tree" id="bracket-grid-tree">
+            <!-- Columna 1: Octavos Izquierda (4 Llaves = 8 Equipos) -->
+            <div class="bracket-column col-left-octavos" id="col-left-octavos">
+              <!-- Renderizado dinámico vía JavaScript -->
+            </div>
+
+            <!-- Conector Octavos -> Cuartos (Lado Izquierdo) -->
+            <div class="bracket-branch-lines lines-left-oct-to-cuartos"></div>
+
+            <!-- Columna 2: Cuartos Izquierda (2 Llaves = 4 Equipos) -->
+            <div class="bracket-column col-left-cuartos" id="col-left-cuartos">
+              <!-- Renderizado dinámico vía JavaScript -->
+            </div>
+
+            <!-- Conector Cuartos -> Semis (Lado Izquierdo) -->
+            <div class="bracket-branch-lines lines-left-cuartos-to-semis"></div>
+
+            <!-- Columna 3: Semifinales Izquierda (1 Llave = 2 Equipos) -->
+            <div class="bracket-column col-left-semis" id="col-left-semis">
+              <!-- Renderizado dinámico vía JavaScript -->
+            </div>
+
+            <!-- Columna 4 (CENTRO): GRAN FINAL & COPA CENTRAL -->
+            <div class="bracket-center-stage">
+              <!-- TÍTULO DE LA FINAL Y SEDE -->
+              <div class="final-match-banner">
+                <div class="final-match-slots" id="final-match-slots">
+                  <!-- Slot Finalista Izquierdo vs Finalista Derecho -->
+                </div>
+                <div class="final-title-text">FINAL</div>
+                <div class="final-event-date" id="final-event-date" contenteditable="true" title="Clic para editar fecha">
+                  14 DE SEPTIEMBRE
+                </div>
+                <div class="final-event-venue" id="final-event-venue" contenteditable="true" title="Clic para editar arena">
+                  ARENA RIGA
+                </div>
+                <div class="final-event-city" id="final-event-city" contenteditable="true" title="Clic para editar ciudad">
+                  Riga (Letonia)
+                </div>
+              </div>
+
+              <!-- TROFEO CENTRAL DORADO REAL Y DETALLADO -->
+              <div class="bracket-trophy-display" id="bracket-trophy-display">
+                <div class="real-gold-trophy-container">
+                  <div class="gold-trophy-aura"></div>
+                  
+                  <!-- SVG Vectorial de Trofeo de Oro Real con Detalles de Alta Fidelidad y Realismo Esculpido -->
+                  <svg class="real-gold-trophy-svg" viewBox="0 0 240 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                      <!-- 1. Gradientes de Oro Metálico Ultra Realista y Multifacético -->
+                      <linearGradient id="goldHighlightMaster" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#fffef0" />
+                        <stop offset="20%" stop-color="#ffe57f" />
+                        <stop offset="45%" stop-color="#ffb300" />
+                        <stop offset="70%" stop-color="#ff8f00" />
+                        <stop offset="88%" stop-color="#ffe082" />
+                        <stop offset="100%" stop-color="#fffde7" />
+                      </linearGradient>
+
+                      <linearGradient id="goldSpecularShine" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9" />
+                        <stop offset="35%" stop-color="#fff9c4" stop-opacity="0.7" />
+                        <stop offset="70%" stop-color="#ffd54f" stop-opacity="0" />
+                        <stop offset="100%" stop-color="#ffffff" stop-opacity="0.4" />
+                      </linearGradient>
+
+                      <linearGradient id="goldCupRealisticGrad" x1="15%" y1="0%" x2="85%" y2="100%">
+                        <stop offset="0%" stop-color="#fffde7" />
+                        <stop offset="12%" stop-color="#ffe082" />
+                        <stop offset="28%" stop-color="#ffb300" />
+                        <stop offset="48%" stop-color="#e65100" />
+                        <stop offset="65%" stop-color="#ff8f00" />
+                        <stop offset="82%" stop-color="#ffe082" />
+                        <stop offset="92%" stop-color="#fff9c4" />
+                        <stop offset="100%" stop-color="#b45309" />
+                      </linearGradient>
+
+                      <linearGradient id="goldFlutedStemGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#78350f" />
+                        <stop offset="18%" stop-color="#ffd54f" />
+                        <stop offset="35%" stop-color="#fffde7" />
+                        <stop offset="55%" stop-color="#b45309" />
+                        <stop offset="75%" stop-color="#ffca28" />
+                        <stop offset="90%" stop-color="#ffe57f" />
+                        <stop offset="100%" stop-color="#451a03" />
+                      </linearGradient>
+
+                      <linearGradient id="goldHandles3DGrad" x1="0%" y1="20%" x2="100%" y2="80%">
+                        <stop offset="0%" stop-color="#fff9c4" />
+                        <stop offset="25%" stop-color="#ffb300" />
+                        <stop offset="50%" stop-color="#d97706" />
+                        <stop offset="75%" stop-color="#78350f" />
+                        <stop offset="90%" stop-color="#ffd54f" />
+                        <stop offset="100%" stop-color="#fffde7" />
+                      </linearGradient>
+
+                      <!-- Base de Madera de Caoba / Ébano Pulida con Relieve Dorado -->
+                      <linearGradient id="marblePedestalGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#180b04" />
+                        <stop offset="15%" stop-color="#3d1d09" />
+                        <stop offset="35%" stop-color="#6e3713" />
+                        <stop offset="50%" stop-color="#8d491c" />
+                        <stop offset="65%" stop-color="#4a220b" />
+                        <stop offset="85%" stop-color="#231005" />
+                        <stop offset="100%" stop-color="#0e0602" />
+                      </linearGradient>
+
+                      <linearGradient id="goldPlaqueBevel" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#fffde7" />
+                        <stop offset="25%" stop-color="#fcd34d" />
+                        <stop offset="70%" stop-color="#f59e0b" />
+                        <stop offset="100%" stop-color="#b45309" />
+                      </linearGradient>
+
+                      <!-- Balón de Baloncesto Dorado Esculpido -->
+                      <radialGradient id="goldBall3DGrad" cx="38%" cy="32%" r="68%">
+                        <stop offset="0%" stop-color="#ffffff" />
+                        <stop offset="15%" stop-color="#fff59d" />
+                        <stop offset="42%" stop-color="#ffb300" />
+                        <stop offset="72%" stop-color="#e65100" />
+                        <stop offset="92%" stop-color="#8c2e00" />
+                        <stop offset="100%" stop-color="#4a1500" />
+                      </radialGradient>
+
+                      <!-- Filtros de Sombra y Resplandor de Oro -->
+                      <filter id="goldSculptGlow" x="-25%" y="-25%" width="150%" height="150%">
+                        <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#ff8f00" flood-opacity="0.75" />
+                      </filter>
+                      <filter id="pedestalShadow" x="-20%" y="-20%" width="140%" height="140%">
+                        <feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#000000" flood-opacity="0.9" />
+                      </filter>
+                      <filter id="innerBevel" x="-10%" y="-10%" width="120%" height="120%">
+                        <feDropShadow dx="0" dy="1" stdDeviation="0.8" flood-color="#ffffff" flood-opacity="0.9" />
+                      </filter>
+                    </defs>
+
+                    <!-- =========================================================
+                         1. BASE / PEDESTAL DE NIVELES CON MADERA Y PLACAS DE ORO
+                         ========================================================= -->
+                    <!-- Sombra profunda inferior de la base -->
+                    <ellipse cx="120" cy="272" rx="85" ry="8" fill="#000000" opacity="0.6" filter="url(#pedestalShadow)" />
+
+                    <!-- Base Nivel Inferior (Pedestal 1) -->
+                    <g filter="url(#pedestalShadow)">
+                      <path d="M38 245 L202 245 L194 270 L46 270 Z" fill="url(#marblePedestalGrad)" stroke="#ffd54f" stroke-width="1.2" />
+                      <!-- Borde Biselado Superior de Nivel 1 -->
+                      <path d="M38 245 L202 245 L198 248 L42 248 Z" fill="url(#goldHighlightMaster)" opacity="0.9" />
+                      
+                      <!-- Placa de Oro Pulido con Remaches Grabada "FIBA CHAMPION TROPHY" -->
+                      <rect x="70" y="250" width="100" height="15" rx="2" fill="url(#goldPlaqueBevel)" stroke="#78350f" stroke-width="0.9" />
+                      <!-- Borde interno de la placa -->
+                      <rect x="72" y="251.5" width="96" height="12" rx="1.5" fill="none" stroke="#fffde7" stroke-width="0.6" opacity="0.8" />
+                      <!-- Remaches en las 4 esquinas de la placa -->
+                      <circle cx="73.5" cy="253" r="0.9" fill="#451a03" />
+                      <circle cx="166.5" cy="253" r="0.9" fill="#451a03" />
+                      <circle cx="73.5" cy="262" r="0.9" fill="#451a03" />
+                      <circle cx="166.5" cy="262" r="0.9" fill="#451a03" />
+                      <text x="120" y="260" font-family="'Russo One', sans-serif" font-size="6.5" font-weight="900" fill="#3b1502" text-anchor="middle" letter-spacing="1">FIBA CHAMPION</text>
+                    </g>
+
+                    <!-- Base Nivel Medio (Pedestal 2 con moldura dorada) -->
+                    <path d="M54 224 L186 224 L192 244 L48 244 Z" fill="url(#marblePedestalGrad)" stroke="#fcd34d" stroke-width="1.2" />
+                    <!-- Moldura de oro cincelado en pedestal medio -->
+                    <path d="M54 224 L186 224 L184 227 L56 227 Z" fill="url(#goldHighlightMaster)" />
+                    <!-- Relieve de Laurel / Greca en Pedestal -->
+                    <ellipse cx="120" cy="234" rx="42" ry="3.5" fill="none" stroke="url(#goldHighlightMaster)" stroke-width="0.8" stroke-dasharray="2,2" opacity="0.8" />
+
+                    <!-- Anillo de Oro Macizo de la Base -->
+                    <g filter="url(#goldSculptGlow)">
+                      <ellipse cx="120" cy="224" rx="55" ry="6.5" fill="url(#goldHighlightMaster)" stroke="#b45309" stroke-width="1.2" />
+                      <ellipse cx="120" cy="223" rx="50" ry="4.8" fill="url(#goldSpecularShine)" />
+                    </g>
+
+                    <!-- =========================================================
+                         2. TALLO / COLUMNA FLUIDA ESCULPIDA Y ANILLOS ORNAMENTALES
+                         ========================================================= -->
+                    <!-- Columna Acanalada de Oro -->
+                    <path d="M104 178 Q108 202 98 223 L142 223 Q132 202 136 178 Z" fill="url(#goldFlutedStemGrad)" stroke="#92400e" stroke-width="1.2" />
+                    <!-- Líneas verticales de canaladuras en el tallo -->
+                    <path d="M112 182 Q115 202 108 222" stroke="#fffde7" stroke-width="1" opacity="0.75" />
+                    <path d="M120 180 L120 223" stroke="#451a03" stroke-width="1.2" opacity="0.6" />
+                    <path d="M128 182 Q125 202 132 222" stroke="#fffde7" stroke-width="1" opacity="0.75" />
+
+                    <!-- Anillo de Tallo Inferior -->
+                    <ellipse cx="120" cy="210" rx="18" ry="4" fill="url(#goldHighlightMaster)" stroke="#78350f" stroke-width="1" />
+                    <ellipse cx="120" cy="209" rx="16" ry="2.5" fill="url(#goldSpecularShine)" />
+
+                    <!-- Anillo de Tallo Superior (Cáliz) -->
+                    <ellipse cx="120" cy="184" rx="22" ry="4.5" fill="url(#goldHighlightMaster)" stroke="#78350f" stroke-width="1.2" />
+                    <ellipse cx="120" cy="183" rx="20" ry="3" fill="url(#goldSpecularShine)" />
+
+                    <!-- =========================================================
+                         3. ASAS / MANIJAS DORADAS ESCULPIDAS EN 3D (IZQ & DER)
+                         ========================================================= -->
+                    <!-- Sombra posterior de las Asas -->
+                    <path d="M72 96 C28 96 18 152 64 172 C68 174 70 167 67 164 C35 147 42 108 75 108 Z" fill="#451a03" opacity="0.5" filter="url(#goldSculptGlow)" />
+                    <path d="M168 96 C212 96 222 152 176 172 C172 174 170 167 173 164 C205 147 198 108 165 108 Z" fill="#451a03" opacity="0.5" filter="url(#goldSculptGlow)" />
+
+                    <!-- Asa Izquierda 3D -->
+                    <path d="M74 95 C30 95 20 148 66 168 C69 170 71 164 68 162 C37 144 44 107 77 107 Z" fill="url(#goldHandles3DGrad)" stroke="#78350f" stroke-width="1.4" filter="url(#goldSculptGlow)" />
+                    <!-- Brillo de relieve en el lomo del Asa Izquierda -->
+                    <path d="M70 98 C34 100 28 142 64 163" fill="none" stroke="url(#goldSpecularShine)" stroke-width="2.2" stroke-linecap="round" />
+                    <path d="M72 100 C40 102 34 138 62 158" fill="none" stroke="#ffffff" stroke-width="1" stroke-linecap="round" opacity="0.9" />
+
+                    <!-- Asa Derecha 3D -->
+                    <path d="M166 95 C210 95 220 148 174 168 C171 170 169 164 172 162 C203 144 196 107 163 107 Z" fill="url(#goldHandles3DGrad)" stroke="#78350f" stroke-width="1.4" filter="url(#goldSculptGlow)" />
+                    <!-- Brillo de relieve en el lomo del Asa Derecha -->
+                    <path d="M170 98 C206 100 212 142 176 163" fill="none" stroke="url(#goldSpecularShine)" stroke-width="2.2" stroke-linecap="round" />
+                    <path d="M168 100 C200 102 206 138 178 158" fill="none" stroke="#ffffff" stroke-width="1" stroke-linecap="round" opacity="0.9" />
+
+                    <!-- =========================================================
+                         4. COPA / CUERPO PRINCIPAL DEL TROFEO CON RELIEVE
+                         ========================================================= -->
+                    <!-- Copa de Oro Esculpida -->
+                    <path d="M62 82 C65 142 86 182 120 182 C154 182 175 142 178 82 Z" fill="url(#goldCupRealisticGrad)" stroke="#b45309" stroke-width="1.6" filter="url(#goldSculptGlow)" />
+
+                    <!-- Reflejo curvo de luz especular en el costado izquierdo de la copa -->
+                    <path d="M72 88 C76 132 92 168 114 178 C102 168 84 134 80 88 Z" fill="url(#goldSpecularShine)" opacity="0.75" />
+                    <path d="M75 92 C78 126 90 156 106 170" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round" opacity="0.8" fill="none" />
+
+                    <!-- Sombra curva de volumen en el costado derecho de la copa -->
+                    <path d="M168 88 C164 132 148 168 126 178 C138 168 156 134 160 88 Z" fill="#451a03" opacity="0.4" />
+
+                    <!-- Franja de Banda Ornamental Grabada "FIBA EUROBASKET" -->
+                    <g filter="url(#innerBevel)">
+                      <path d="M70 122 C88 136 152 136 170 122 L168 130 C150 144 90 144 72 130 Z" fill="url(#goldHighlightMaster)" stroke="#78350f" stroke-width="0.8" />
+                      <!-- Relieve de Laurel / Estrellas en la banda -->
+                      <circle cx="82" cy="129" r="1.4" fill="#78350f" />
+                      <circle cx="158" cy="129" r="1.4" fill="#78350f" />
+                      <text x="120" y="132.5" font-family="'Russo One', sans-serif" font-size="6" font-weight="900" fill="#451a03" text-anchor="middle" letter-spacing="1">EUROBASKET TROPHY</text>
+                    </g>
+
+                    <!-- =========================================================
+                         5. BALÓN DE BALONCESTO DE ORO 3D EN LA CUMBRE
+                         ========================================================= -->
+                    <!-- Sombra proyectada por el balón sobre la copa -->
+                    <ellipse cx="120" cy="88" rx="42" ry="7" fill="#260b00" opacity="0.5" />
+
+                    <!-- Esfera Balón de Baloncesto 3D -->
+                    <g filter="url(#goldSculptGlow)">
+                      <circle cx="120" cy="62" r="37" fill="url(#goldBall3DGrad)" stroke="#fffde7" stroke-width="1.6" />
+
+                      <!-- Costuras / Canales Grabados del Balón de Baloncesto -->
+                      <!-- Línea Ecuatorial Horizontal -->
+                      <path d="M83 62 C96 62 144 62 157 62" stroke="#4a1500" stroke-width="2.2" stroke-linecap="round" />
+                      <path d="M83 61.2 C96 61.2 144 61.2 157 61.2" stroke="#fff9c4" stroke-width="0.7" stroke-linecap="round" opacity="0.7" />
+
+                      <!-- Línea Longitudinal Vertical -->
+                      <path d="M120 25 C120 38 120 86 120 99" stroke="#4a1500" stroke-width="2.2" stroke-linecap="round" />
+                      <path d="M120.8 25 C120.8 38 120.8 86 120.8 99" stroke="#fff9c4" stroke-width="0.7" stroke-linecap="round" opacity="0.7" />
+
+                      <!-- Curvas Laterales de los Gajos del Balón -->
+                      <path d="M94 36 C112 47 112 77 94 88" stroke="#4a1500" stroke-width="2" fill="none" stroke-linecap="round" />
+                      <path d="M94.6 35.4 C112.6 46.4 112.6 76.4 94.6 87.4" stroke="#fff9c4" stroke-width="0.7" fill="none" opacity="0.7" />
+
+                      <path d="M146 36 C128 47 128 77 146 88" stroke="#4a1500" stroke-width="2" fill="none" stroke-linecap="round" />
+                      <path d="M146.6 35.4 C128.6 46.4 128.6 76.4 146.6 87.4" stroke="#fff9c4" stroke-width="0.7" fill="none" opacity="0.7" />
+
+                      <!-- Destello Especular Suave de Esfera 3D -->
+                      <ellipse cx="106" cy="45" rx="14" ry="7" transform="rotate(-35 106 45)" fill="#ffffff" opacity="0.75" />
+                      <ellipse cx="103" cy="42" rx="6" ry="2.5" transform="rotate(-35 103 42)" fill="#ffffff" opacity="0.9" />
+                      <!-- Reflejo Secundario de Borde Inferior -->
+                      <path d="M98 90 C108 96 132 96 142 90" stroke="#ffd54f" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.6" />
+                    </g>
+
+                    <!-- =========================================================
+                         6. CORONA / BORDE SUPERIOR DE LA COPA
+                         ========================================================= -->
+                    <g filter="url(#goldSculptGlow)">
+                      <ellipse cx="120" cy="82" rx="58" ry="9" fill="url(#goldHighlightMaster)" stroke="#78350f" stroke-width="1.6" />
+                      <ellipse cx="120" cy="80.8" rx="54" ry="6.2" fill="url(#goldSpecularShine)" />
+                    </g>
+
+                    <!-- =========================================================
+                         7. DESTELLOS DE BRILLO Y ESTRELLAS FOTORREALISTAS (SPARKLES)
+                         ========================================================= -->
+                    <!-- Destello 1 (Corona Izquierda) -->
+                    <g class="trophy-sparkle-1" transform="translate(68, 76)">
+                      <path d="M0 -8 L2 -2 L8 0 L2 2 L0 8 L-2 2 L-8 0 L-2 -2 Z" fill="#ffffff" />
+                      <circle cx="0" cy="0" r="2.5" fill="#fffde7" />
+                    </g>
+                    <!-- Destello 2 (Balón Cumbre) -->
+                    <g class="trophy-sparkle-3" transform="translate(104, 38)">
+                      <path d="M0 -10 L2.2 -2.2 L10 0 L2.2 2.2 L0 10 L-2.2 2.2 L-10 0 L-2.2 -2.2 Z" fill="#ffffff" />
+                      <circle cx="0" cy="0" r="3" fill="#fff9c4" />
+                    </g>
+                    <!-- Destello 3 (Asa Derecha) -->
+                    <g class="trophy-sparkle-2" transform="translate(178, 102)">
+                      <path d="M0 -9 L2 -2 L9 0 L2 2 L0 9 L-2 2 L-9 0 L-2 -2 Z" fill="#ffffff" />
+                      <circle cx="0" cy="0" r="2.5" fill="#ffecb3" />
+                    </g>
+                    <!-- Destello 4 (Placa Base) -->
+                    <g class="trophy-sparkle-1" transform="translate(162, 254)">
+                      <path d="M0 -6 L1.5 -1.5 L6 0 L1.5 1.5 L0 6 L-1.5 1.5 L-6 0 L-1.5 -1.5 Z" fill="#ffffff" />
+                    </g>
+                  </svg>
+                </div>
+
+                <!-- PRESENTACIÓN DESTACADA DEL CAMPEÓN SITUADA JUSTO DEBAJO DEL TROFEO:
+                     - LOGOTIPO EN TAMAÑO GRANDE SIN FONDO NI BORDES CON EFECTO HOVER
+                     - NOMBRE DEL EQUIPO EN GRANDE
+                     - ID EN GRANDE SIN FONDO NI BORDES -->
+                <div class="champion-display-section" id="trophy-champion-display" style="display: none;">
+                  <!-- Renderizado dinámico vía JavaScript al definir el campeón -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Columna 5: Semifinales Derecha (1 Llave = 2 Equipos) -->
+            <div class="bracket-column col-right-semis" id="col-right-semis">
+              <!-- Renderizado dinámico vía JavaScript -->
+            </div>
+
+            <!-- Conector Semis -> Cuartos (Lado Derecho) -->
+            <div class="bracket-branch-lines lines-right-semis-to-cuartos"></div>
+
+            <!-- Columna 6: Cuartos Derecha (2 Llaves = 4 Equipos) -->
+            <div class="bracket-column col-right-cuartos" id="col-right-cuartos">
+              <!-- Renderizado dinámico vía JavaScript -->
+            </div>
+
+            <!-- Conector Cuartos -> Octavos (Lado Derecho) -->
+            <div class="bracket-branch-lines lines-right-cuartos-to-oct"></div>
+
+            <!-- Columna 7: Octavos Derecha (4 Llaves = 8 Equipos) -->
+            <div class="bracket-column col-right-octavos" id="col-right-octavos">
+              <!-- Renderizado dinámico vía JavaScript -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         5. MODAL PARA ASIGNAR / BUSCAR EQUIPO POR CAMPO "ID" EN HOJA "AFILIADOS"
+         ========================================================================= -->
+    <div class="modal custom-bracket-assign-modal" id="bracket-assign-modal">
+      <div class="modal-background" id="bracket-assign-backdrop"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <div class="modal-card-title">
+            <i class="fa-solid fa-id-card-clip text-orange"></i>
+            <span>Asignar Equipo al Cuadro • Consulta por "ID" en "Afiliados"</span>
+          </div>
+          <button
+            type="button"
+            class="delete"
+            aria-label="close"
+            id="btn-close-assign-modal"
+          ></button>
+        </header>
+
+        <section class="modal-card-body">
+          <!-- Guía y destino -->
+          <div class="modal-slot-target-banner" id="modal-target-slot-display">
+            <i class="fa-solid fa-location-crosshairs text-orange"></i>
+            <span>Asignando a: <strong id="modal-target-slot-text">Octavos - Llave 1 (Equipo 1)</strong></span>
+          </div>
+
+          <!-- Selector de Destino de Ronda / Llave / Posición -->
+          <div class="columns is-mobile is-multiline mb-2">
+            <div class="column is-6">
+              <label class="label is-small"><i class="fa-solid fa-layer-group"></i> Segmento / Ronda:</label>
+              <div class="select is-fullwidth is-small">
+                <select id="modal-select-round">
+                  <option value="octavos">Octavos de final (16 Equipos)</option>
+                  <option value="cuartos">Cuartos de final (8 Equipos)</option>
+                  <option value="semis">Semifinal (4 Equipos)</option>
+                  <option value="final">Gran Final (2 Equipos)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="column is-6">
+              <label class="label is-small"><i class="fa-solid fa-diagram-project"></i> Posición / Llave:</label>
+              <div class="select is-fullwidth is-small">
+                <select id="modal-select-slot">
+                  <!-- Llenado dinámico según la ronda seleccionada -->
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Campo de Búsqueda por ID en la hoja "Afiliados" -->
+          <div class="field">
+            <label class="label is-small">
+              <i class="fa-solid fa-fingerprint text-orange"></i> Código ID del Equipo en Hoja "Afiliados":
+            </label>
+            <div class="control has-icons-left has-addons">
+              <div class="control has-icons-left is-expanded">
+                <input
+                  id="modal-team-id-input"
+                  class="input is-small"
+                  type="text"
+                  placeholder="Ingrese ID (ej. BB-00001, J-12345678, LIT, GRE)..."
+                  autocomplete="off"
+                />
+                <span class="icon is-small is-left">
+                  <i class="fa-solid fa-id-badge text-orange"></i>
+                </span>
+              </div>
+              <div class="control">
+                <button type="button" class="button is-small is-primary" id="btn-modal-search-id">
+                  <i class="fa-solid fa-magnifying-glass"></i> Buscar ID
+                </button>
+              </div>
+            </div>
+            <p class="help text-muted">
+              Referencia fija: Consulta la hoja <strong>Afiliados</strong> por la columna <strong>ID</strong> (obtiene NombreCompleto y FileLink/Logo).
+            </p>
+          </div>
+
+          <!-- Tarjeta de Vista Previa del Equipo Encontrado -->
+          <div class="team-preview-result-card" id="modal-team-preview-card">
+            <div class="preview-logo-container">
+              <div class="preview-logo-box" id="modal-preview-logo-box">
+                <i class="fa-solid fa-shield-halved fallback-icon"></i>
+              </div>
+            </div>
+            <div class="preview-info-box">
+              <span class="preview-id-tag" id="modal-preview-id-tag">ID: --</span>
+              <h3 class="preview-name-title" id="modal-preview-name-title">Ingrese un ID y presione Buscar</h3>
+              <p class="preview-extra-info" id="modal-preview-status-text">Listo para vincular</p>
+            </div>
+          </div>
+
+          <!-- Selector rápido de equipos precargados de Afiliados / Posiciones -->
+          <div class="field mt-3">
+            <label class="label is-small">
+              <i class="fa-solid fa-bolt text-gold"></i> O elija un equipo de la lista de Afiliados:
+            </label>
+            <div class="quick-affiliates-grid" id="modal-quick-affiliates-grid">
+              <!-- Botones rápidos de equipos con sus logos -->
+            </div>
+          </div>
+        </section>
+
+        <footer class="modal-card-foot">
+          <button type="button" class="button is-primary" id="btn-modal-confirm-assign">
+            <i class="fa-solid fa-check"></i> Asignar Equipo al Cuadro
+          </button>
+          <button type="button" class="button is-danger is-outlined" id="btn-modal-remove-team">
+            <i class="fa-solid fa-user-minus"></i> Quitar Equipo de esta Casilla
+          </button>
+          <button type="button" class="button is-light" id="btn-modal-cancel-assign">
+            Cancelar
+          </button>
+        </footer>
+      </div>
+    </div>
+    </div>
+
+    <!-- =========================================================================
+         5. CAJA DE MENSAJES Y NOTIFICACIONES TOAST DE ESTADO
+         ========================================================================= -->
+    <div id="message"></div>
+
+    <!-- =========================================================================
+         6. MODAL DE AUTORIZACIÓN DE ADMINISTRADOR (USUARIO Y CONTRASEÑA)
+         Se activa para la acción: Cargar Cartelera de la Nube (Hoja Game)
+         ========================================================================= -->
+    <div class="modal custom-admin-modal" id="admin-auth-modal">
+      <div class="modal-background" id="admin-auth-backdrop"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <div class="modal-card-title">
+            <i class="fa-solid fa-user-shield text-orange"></i>
+            <span>Acceso de Administrador</span>
+          </div>
+          <button
+            type="button"
+            class="delete"
+            aria-label="close"
+            id="btn-close-admin-modal"
+          ></button>
+        </header>
+        <section class="modal-card-body">
+          <div class="admin-auth-icon-badge">
+            <i class="fa-solid fa-lock"></i>
+          </div>
+          <p class="admin-auth-instruction">
+            Esta acción requiere autorización. Por favor ingrese sus
+            credenciales de administrador para continuar:
+          </p>
+
+          <div class="field">
+            <label class="label"><i class="fa-solid fa-user"></i> Usuario Administrador</label>
+            <div class="control has-icons-left">
+              <input
+                id="admin-username-input"
+                class="input"
+                type="text"
+                placeholder="Usuario (ej. Oso)"
+                autocomplete="username"
+              />
+              <span class="icon is-small is-left">
+                <i class="fa-solid fa-user-tie text-orange"></i>
+              </span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label"><i class="fa-solid fa-key"></i> Contraseña</label>
+            <div class="control has-icons-left has-icons-right">
+              <input
+                id="admin-password-input"
+                class="input"
+                type="password"
+                placeholder="Contraseña (ej. 123456)"
+                autocomplete="current-password"
+              />
+              <span class="icon is-small is-left">
+                <i class="fa-solid fa-lock text-orange"></i>
+              </span>
+              <button
+                type="button"
+                class="btn-toggle-pwd"
+                id="btn-toggle-admin-pwd"
+                tabindex="-1"
+                title="Mostrar/Ocultar contraseña"
+              >
+                <i class="fa-solid fa-eye" id="icon-toggle-pwd"></i>
+              </button>
+            </div>
+          </div>
+
+          <div
+            id="admin-auth-error"
+            class="notification is-danger is-light mt-3"
+            style="display: none"
+          >
+            <i class="fa-solid fa-triangle-exclamation mr-2"></i>
+            <span id="admin-auth-error-text">Credenciales de administrador incorrectas.</span>
+          </div>
+        </section>
+        <footer class="modal-card-foot">
+          <button
+            type="button"
+            class="button is-primary"
+            id="btn-confirm-admin-auth"
+          >
+            <i class="fa-solid fa-key"></i> Autorizar y Continuar
+          </button>
+          <button
+            type="button"
+            class="button is-light"
+            id="btn-cancel-admin-auth"
+          >
+            Cancelar
+          </button>
+        </footer>
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         7. MODAL PARA CARGAR PLAYOFFS GUARDADOS POR CAMPO ID
+         ========================================================================= -->
+    <div class="modal custom-load-bracket-modal" id="load-bracket-modal">
+      <div class="modal-background" id="load-bracket-backdrop"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <div class="modal-card-title">
+            <i class="fa-solid fa-cloud-arrow-down text-purple"></i>
+            <span>Cargar PlayOffs Guardados por ID</span>
+          </div>
+          <button
+            type="button"
+            class="delete"
+            aria-label="close"
+            id="btn-close-load-bracket-modal"
+          ></button>
+        </header>
+        <section class="modal-card-body">
+          <div class="modal-slot-target-banner">
+            <i class="fa-solid fa-circle-info text-purple"></i>
+            <span>Ingrese el <strong>ID del Torneo</strong> o <strong>ID de Llave/Partido</strong> guardado en la hoja <strong>PlayOffs</strong> o seleccione de la lista disponible:</span>
+          </div>
+
+          <div class="field">
+            <label class="label"><i class="fa-solid fa-fingerprint text-purple"></i> ID a Consultar / Cargar:</label>
+            <div class="field has-addons">
+              <div class="control is-expanded has-icons-left">
+                <input
+                  id="load-bracket-id-input"
+                  class="input"
+                  type="text"
+                  placeholder="Ej: TMT-00001, PO-OCT-01, TODOS o ID de Torneo..."
+                />
+                <span class="icon is-small is-left">
+                  <i class="fa-solid fa-magnifying-glass text-purple"></i>
+                </span>
+              </div>
+              <div class="control">
+                <button type="button" class="button is-primary" id="btn-modal-do-load-bracket">
+                  <i class="fa-solid fa-download"></i> Cargar por ID
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="field mt-4">
+            <label class="label is-small">
+              <i class="fa-solid fa-clock-rotate-left text-gold"></i> O elija una versión o torneo guardado recientemente:
+            </label>
+            <div class="saved-brackets-history-list" id="modal-saved-brackets-list">
+              <div class="text-muted p-3 text-center" id="saved-brackets-loading-state">
+                <i class="fa-solid fa-spinner fa-spin mr-1"></i> Consultando versiones de PlayOffs en el servidor...
+              </div>
+            </div>
+          </div>
+        </section>
+        <footer class="modal-card-foot">
+          <button type="button" class="button is-primary" id="btn-modal-load-latest-bracket">
+            <i class="fa-solid fa-arrows-rotate"></i> Cargar Última Configuración Global
+          </button>
+          <button type="button" class="button is-light" id="btn-modal-cancel-load-bracket">
+            Cerrar
+          </button>
+        </footer>
+      </div>
+    </div>
+
+    <!-- Pie de página / Estado del sistema -->
+    <footer class="app-footer">
+      <p>
+        Sistema de Gestión y Consulta Dinámica • Conectado a Google Sheets (Hoja: Game) & Google Drive
+      </p>
+    </footer>
+
+    <!-- CONTROLADOR JAVASCRIPT DE LA TABLA DE POSICIONES -->
+    <script src="PositionTable.js"></script>
+  </body>
+</html>
