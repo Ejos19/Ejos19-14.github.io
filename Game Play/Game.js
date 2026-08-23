@@ -65,8 +65,8 @@
   // Simplemente cambia los valores de 'ADMIN_USER' y 'ADMIN_PASSWORD' a continuación:
   // =====================================================================================
   const ADMIN_CREDENTIALS = {
-    ADMIN_USER: "Oso", // <-- [CONFIGURACIÓN] CAMBIA AQUÍ TU USUARIO DE ADMINISTRADOR
-    ADMIN_PASSWORD: "123456", // <-- [CONFIGURACIÓN] CAMBIA AQUÍ TU CONTRASEÑA DE ADMINISTRADOR
+    ADMIN_USER: "Deion", // <-- [CONFIGURACIÓN] CAMBIA AQUÍ TU USUARIO DE ADMINISTRADOR
+    ADMIN_PASSWORD: "232026", // <-- [CONFIGURACIÓN] CAMBIA AQUÍ TU CONTRASEÑA DE ADMINISTRADOR
   };
 
   // Variable de control para el modal de autenticación
