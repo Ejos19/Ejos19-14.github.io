@@ -1,0 +1,748 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Quicksand:wght@500;600;700&display=swap");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css");
+
+/* =====================================================================================
+   ARCHIVO: Add.css
+   DESCRIPCIÓN: Tema Verde Neón / Cyberpunk Emerald Glassmorphism para el formulario Add.html
+   COMPATIBLE: Totalmente unificado con Add.html y el controlador Afiliados.js.
+   ===================================================================================== */
+
+:root {
+  /* --- PALETA DE COLORES VERDE NEÓN Y ACENTOS --- */
+  --primary: #00ff88; /* Verde Neón ultra-brillante principal */
+  --primary-green: #10b981; /* Verde esmeralda */
+  --primary-hover: #00e67a; /* Verde neón botón hover */
+  --primary-container: rgba(0, 255, 136, 0.15);
+
+  --accent-cyan: #06b6d4; /* Cian brillante */
+  --accent-lime: #a3e635; /* Lima Neón */
+  --accent-amber: #f59e0b; /* Ámbar aviso / actualización */
+  --accent-rose: #f43f5e; /* Rojo error / cancelación */
+
+  /* --- CRISTALERÍA GLASSMORPHISM CON TINTE ESMERALDA --- */
+  --glass-master-bg: rgba(9, 20, 15, 0.75);
+  --glass-card-bg: rgba(10, 22, 17, 0.62);
+  --glass-header-bg: linear-gradient(
+    90deg,
+    rgba(0, 255, 136, 0.18) 0%,
+    rgba(16, 185, 129, 0.14) 100%
+  );
+  --glass-input-bg: rgba(3, 10, 6, 0.7);
+  --glass-border: rgba(0, 255, 136, 0.16);
+  --glass-border-hover: rgba(0, 255, 136, 0.5);
+  --input-border: rgba(255, 255, 255, 0.14);
+  --input-focus: #00ff88;
+  --border-error: #f87171;
+
+  /* --- SOMBRAS Y RESPLANDORES VERDE NEÓN --- */
+  --shadow-panel:
+    0 25px 50px -12px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(0, 255, 136, 0.2);
+  --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.55);
+  --shadow-hover:
+    0 20px 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(0, 255, 136, 0.25);
+  --shadow-button:
+    0 0 24px rgba(0, 255, 136, 0.4), 0 8px 20px rgba(0, 0, 0, 0.5);
+
+  /* --- TIPOGRAFÍA Y TEXTOS --- */
+  --text-primary: #f0fdf4;
+  --text-secondary: #86efac;
+  --text-muted: #6ee7b7;
+}
+
+/* =====================================================================================
+   REINICIO TIPOGRÁFICO Y TIPOGRAFÍA BASE DEL SISTEMA
+   Nota: Aplicamos la fuente a elementos de texto para no sobrescribir la familia tipográfica 
+   de FontAwesome en las etiquetas <i> o iconos (.fa, .fa-solid, .fa-brands, etc.).
+   ===================================================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body,
+html,
+input,
+button,
+select,
+textarea,
+p,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+label,
+table,
+div {
+  font-family:
+    "Inter",
+    "Quicksand",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+}
+
+/* =====================================================================================
+   REGLAS CRÍTICAS PARA ICONOGRAFÍA (FONTAWESOME 6)
+   ===================================================================================== */
+i.fa,
+i.fa-solid,
+i.fa-regular,
+i.fa-brands,
+i.fas,
+i.far,
+i.fab,
+.fa,
+.fa-solid,
+.fa-regular,
+.fa-brands {
+  font-family:
+    "Font Awesome 6 Free", "Font Awesome 6 Brands", "FontAwesome" !important;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: inline-block;
+  line-height: 1;
+}
+
+i.fa-solid,
+.fa-solid {
+  font-weight: 900 !important;
+}
+
+i.fa-regular,
+.fa-regular {
+  font-weight: 400 !important;
+}
+
+i.fa-brands,
+.fa-brands {
+  font-family: "Font Awesome 6 Brands" !important;
+  font-weight: 400 !important;
+}
+
+body {
+  /* Fondo Verde Neón profundo con iluminación radial */
+  background-color: #040d07 !important;
+  background-image:
+    radial-gradient(
+      circle at 15% 15%,
+      rgba(0, 255, 136, 0.14) 0%,
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 85% 85%,
+      rgba(16, 185, 129, 0.16) 0%,
+      transparent 45%
+    ),
+    linear-gradient(135deg, #030a05 0%, #06150c 50%, #020804 100%) !important;
+  background-attachment: fixed !important;
+  color: var(--text-primary) !important;
+  padding: 24px 16px 60px 16px !important;
+  min-height: 100vh;
+}
+
+/* =====================================================================================
+   BARRA DE NAVEGACIÓN ENTRE FORMULARIOS (PESTAÑAS)
+   ===================================================================================== */
+.app-navigation-tabs {
+  max-width: 880px !important;
+  margin: 0 auto 16px auto !important;
+  background: rgba(9, 20, 15, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 255, 136, 0.22);
+  border-radius: 16px;
+  padding: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+.tabs-container {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tab-item {
+  flex: 1;
+  min-width: 180px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #94a3b8;
+  text-decoration: none !important;
+  font-size: 0.92rem;
+  font-weight: 600;
+  transition: all 0.25s ease;
+}
+
+.tab-item:hover {
+  background: rgba(0, 255, 136, 0.1);
+  border-color: rgba(0, 255, 136, 0.4);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.tab-item.active {
+  background: rgba(0, 255, 136, 0.2) !important;
+  border-color: var(--primary) !important;
+  color: #00ff88 !important;
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+  font-weight: 700;
+}
+
+.tab-badge {
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  letter-spacing: 0.02em;
+}
+
+.tab-badge.neon-blue-badge {
+  background: rgba(0, 136, 255, 0.219);
+  color: #38bdf8;
+  border-color: rgb(0, 162, 255);
+}
+
+.tab-badge.neon-green-badge {
+  background: rgba(0, 255, 136, 0.25);
+  color: #00ff88;
+  border-color: rgba(0, 255, 136, 0.45);
+}
+
+.tab-badge.neon-yellow-badge {
+  background: rgba(250, 204, 21, 0.2);
+  color: #facc15;
+  border-color: rgba(250, 204, 21, 0.5);
+}
+
+/* =====================================================================================
+   HERO / ENCABEZADO PRINCIPAL (TEMA VERDE NEÓN)
+   ===================================================================================== */
+.hero.is-primary {
+  background: var(--glass-master-bg) !important;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--glass-border) !important;
+  border-radius: 20px !important;
+  max-width: 880px !important;
+  margin: 0 auto 20px auto !important;
+  box-shadow: var(--shadow-card) !important;
+  overflow: hidden;
+  position: relative;
+}
+
+.hero.is-primary::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #00ff88, #10b981, #a3e635, #00ff88);
+}
+
+.hero-body {
+  padding: 24px 28px !important;
+  background-image: none !important;
+  display: flex;
+  align-items: center;
+}
+
+.hero-header-content {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.hero-logo-badge {
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 255, 136, 0.25) 0%,
+    rgba(16, 185, 129, 0.2) 100%
+  );
+  border: 1px solid rgba(0, 255, 136, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  color: #00ff88;
+  box-shadow: 0 0 25px rgba(0, 255, 136, 0.35);
+  flex-shrink: 0;
+}
+
+.title {
+  color: #f0fdf4 !important;
+  font-weight: 700 !important;
+  font-size: 1.55rem !important;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px !important;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.hero-subtitle {
+  color: #a7f3d0;
+  font-size: 0.95rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.hero-badge-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(0, 255, 136, 0.2);
+  color: #00ff88;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border: 1px solid rgba(0, 255, 136, 0.4);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+/* =====================================================================================
+   BARRA DE INDICADORES DE CONFIGURACIÓN ACTIVA (HOJA, CAMPO Y MODO)
+   ===================================================================================== */
+.config-indicator-bar {
+  max-width: 880px;
+  margin: 0 auto 16px auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  background: rgba(9, 20, 15, 0.65);
+  backdrop-filter: blur(10px);
+  padding: 10px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 255, 136, 0.15);
+}
+
+.config-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: #a7f3d0;
+  font-weight: 500;
+}
+
+.config-item i {
+  color: #00ff88;
+}
+
+.config-chip {
+  background: rgba(0, 255, 136, 0.15);
+  color: #00ff88;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 600;
+  font-size: 0.8rem;
+  border: 1px solid rgba(0, 255, 136, 0.35);
+}
+
+.config-chip.purple {
+  background: rgba(168, 85, 247, 0.15);
+  color: #c084fc;
+  border-color: rgba(168, 85, 247, 0.35);
+}
+
+.config-chip.emerald {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border-color: rgba(16, 185, 129, 0.35);
+}
+
+.config-chip.amber {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  border-color: rgba(245, 158, 11, 0.35);
+}
+
+/* =====================================================================================
+   TARJETAS SUPERIORES (MODO Y BÚSQUEDA)
+   ===================================================================================== */
+body > .field,
+#rif-controls {
+  max-width: 880px !important;
+  margin: 0 auto 16px auto !important;
+  background: var(--glass-card-bg) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border) !important;
+  border-radius: 16px !important;
+  padding: 20px !important;
+  box-shadow: var(--shadow-card) !important;
+  transition: all 0.3s ease;
+}
+
+#rif-controls {
+  border-color: rgba(0, 255, 136, 0.4) !important;
+  background: linear-gradient(
+    135deg,
+    rgba(9, 20, 15, 0.9) 0%,
+    rgba(6, 15, 10, 0.95) 100%
+  ) !important;
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.6),
+    0 0 20px rgba(0, 255, 136, 0.12) !important;
+}
+
+/* =====================================================================================
+   CONTENEDOR DEL FORMULARIO PRINCIPAL (GRILLA RESPONSIVA)
+   ===================================================================================== */
+.container#form {
+  background: var(--glass-master-bg) !important;
+  backdrop-filter: blur(24px) saturate(190%);
+  -webkit-backdrop-filter: blur(24px) saturate(190%);
+  border: 1px solid var(--glass-border) !important;
+  border-radius: 24px !important;
+  box-shadow: var(--shadow-panel) !important;
+  padding: 36px 32px !important;
+  max-width: 880px !important;
+  margin: 0 auto 30px auto !important;
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px 24px;
+}
+
+/* =====================================================================================
+   CAMPOS, ETIQUETAS E INPUTS
+   ===================================================================================== */
+.container#form > .field {
+  margin-bottom: 0 !important;
+}
+
+.container#form > .field.full-width,
+.container#form > .field.is-grouped {
+  grid-column: 1 / -1;
+}
+
+.label {
+  color: #a7f3d0 !important;
+  font-weight: 600 !important;
+  font-size: 0.88rem !important;
+  margin-bottom: 8px !important;
+  letter-spacing: 0.01em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.label i {
+  color: #00ff88;
+  font-size: 0.95rem;
+}
+
+.input,
+.textarea,
+.select select {
+  background: var(--glass-input-bg) !important;
+  border: 1px solid var(--input-border) !important;
+  color: #f0fdf4 !important;
+  border-radius: 12px !important;
+  padding: 12px 16px !important;
+  font-size: 0.95rem !important;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4) !important;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  height: auto !important;
+}
+
+.input:hover,
+.textarea:hover,
+.select select:hover {
+  border-color: var(--glass-border-hover) !important;
+}
+
+.input:focus,
+.textarea:focus,
+.select select:focus {
+  border-color: #00ff88 !important;
+  box-shadow:
+    0 0 0 3px rgba(0, 255, 136, 0.25),
+    inset 0 2px 4px rgba(0, 0, 0, 0.4) !important;
+  outline: none !important;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: #6ee7b7 !important;
+  opacity: 0.6;
+}
+
+/* =====================================================================================
+   ESTILOS PARA EL CAMPO ID ÚNICO DEL SISTEMA (READONLY)
+   ==================================================================================== */
+.input.is-readonly-id,
+.input[readonly] {
+  background: rgba(6, 15, 10, 0.85) !important;
+  border: 1px solid rgba(0, 255, 136, 0.4) !important;
+  color: #00ff88 !important;
+  font-family: "JetBrains Mono", monospace !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.06em !important;
+  cursor: default !important;
+  user-select: all !important;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6) !important;
+}
+
+.input.is-readonly-id:focus,
+.input[readonly]:focus {
+  border-color: rgba(0, 255, 136, 0.75) !important;
+  box-shadow:
+    0 0 16px rgba(0, 255, 136, 0.35),
+    inset 0 2px 4px rgba(0, 0, 0, 0.6) !important;
+  outline: none !important;
+}
+
+.id-lock-icon {
+  color: #00ff88 !important;
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+/* --- SELECTS Y DESPLEGABLES --- */
+.select,
+.select select {
+  width: 100% !important;
+}
+
+.select:not(.is-multiple):not(.is-loading)::after {
+  border-color: #00ff88 !important;
+  right: 1.125em !important;
+  top: 50% !important;
+  transform: translateY(-50%) rotate(-45deg) !important;
+}
+
+select option {
+  background: #06150c !important;
+  color: #f0fdf4 !important;
+  padding: 10px !important;
+}
+
+/* --- SUBIDA DE ARCHIVOS (FILE INPUT) --- */
+.file.has-name {
+  border: 1px dashed rgba(0, 255, 136, 0.35);
+  border-radius: 12px;
+  padding: 4px;
+  background: rgba(3, 10, 6, 0.6);
+  transition: all 0.25s ease;
+}
+
+.file.has-name:hover {
+  border-color: #00ff88;
+  background: rgba(0, 255, 136, 0.08);
+}
+
+.file-cta {
+  background: rgba(0, 255, 136, 0.2) !important;
+  color: #00ff88 !important;
+  border: none !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  padding: 8px 16px !important;
+}
+
+.file-name {
+  border: none !important;
+  color: #86efac !important;
+  font-size: 0.9rem !important;
+  background: transparent !important;
+}
+
+/* =====================================================================================
+   BOTONES DE ACCIÓN PRINCIPALES (TEMA VERDE NEÓN)
+   ===================================================================================== */
+.button {
+  border-radius: 12px !important;
+  font-weight: 700 !important;
+  padding: 12px 24px !important;
+  height: auto !important;
+  font-size: 0.95rem !important;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  border: 1px solid transparent !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+.button.is-primary {
+  background: linear-gradient(135deg, #00ff88 0%, #059669 100%) !important;
+  color: #022c22 !important;
+  box-shadow: var(--shadow-button) !important;
+}
+
+.button.is-primary:hover {
+  background: linear-gradient(135deg, #22c55e 0%, #00ff88 100%) !important;
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 30px rgba(0, 255, 136, 0.6),
+    0 10px 25px rgba(0, 0, 0, 0.5) !important;
+}
+
+.button.is-info {
+  background: linear-gradient(135deg, #00ff88 0%, #0284c7 100%) !important;
+  color: #04120a !important;
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.35) !important;
+}
+
+.button.is-info:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 26px rgba(0, 255, 136, 0.55) !important;
+}
+
+.button.is-warning {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+  color: #1e1b4b !important;
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.4) !important;
+}
+
+.button.is-warning:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 28px rgba(245, 158, 11, 0.6) !important;
+}
+
+.button.is-danger {
+  background: rgba(244, 63, 94, 0.15) !important;
+  border-color: rgba(244, 63, 94, 0.4) !important;
+  color: #fda4af !important;
+}
+
+.button.is-danger:hover {
+  background: rgba(244, 63, 94, 0.35) !important;
+  color: #fff !important;
+  transform: translateY(-2px);
+}
+
+.button.is-light {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #e2e8f0 !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+.button.is-light:hover {
+  background: rgba(255, 255, 255, 0.16) !important;
+  color: #fff !important;
+}
+
+.button.is-grouped {
+  display: flex !important;
+  gap: 14px !important;
+  flex-wrap: wrap !important;
+  margin-top: 10px !important;
+}
+
+/* =====================================================================================
+   CAJA DE MENSAJES Y NOTIFICACIONES DE ESTADO
+   ===================================================================================== */
+#message {
+  max-width: 880px;
+  margin: 0 auto 24px auto;
+  padding: 16px 20px;
+  border-radius: 14px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  display: none;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  animation: messageSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  line-height: 1.6;
+}
+
+@keyframes messageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.help {
+  color: #a7f3d0 !important;
+  font-size: 0.82rem !important;
+  margin-top: 8px !important;
+}
+
+/* =====================================================================================
+   PIE DE PÁGINA
+   ===================================================================================== */
+.app-footer {
+  max-width: 880px;
+  margin: 20px auto 0 auto;
+  text-align: center;
+  color: #6ee7b7;
+  font-size: 0.82rem;
+  padding: 16px;
+  border-top: 1px solid rgba(0, 255, 136, 0.15);
+}
+
+/* =====================================================================================
+   RESPONSIVIDAD Y DISPOSITIVOS MÓVILES
+   ===================================================================================== */
+@media (max-width: 768px) {
+  .container#form {
+    grid-template-columns: 1fr !important;
+    padding: 24px 18px !important;
+    border-radius: 18px !important;
+  }
+
+  .hero-header-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+  }
+
+  .hero-subtitle {
+    justify-content: center;
+  }
+
+  .title {
+    font-size: 1.35rem !important;
+  }
+
+  .config-indicator-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .tabs-container {
+    flex-direction: column;
+  }
+
+  .button.is-grouped {
+    flex-direction: column;
+  }
+
+  .button.is-grouped .control,
+  .button.is-grouped .button {
+    width: 100% !important;
+    justify-content: center;
+  }
+}
