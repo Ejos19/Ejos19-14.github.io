@@ -43,7 +43,7 @@
     // ===================================================================================
     // 👈 2. [FONDO 1] FONDO DETRÁS DE CADA JUEGO INDIVIDUAL (Banner Versus)
     // ===================================================================================
-    FONDO_DETRAS_DE_CADA_JUEGO: "/Asset/Fondo1.png",
+    FONDO_DETRAS_DE_CADA_JUEGO: "../Asset/Fondo1.png",
     OPACIDAD_FONDO_CADA_JUEGO: 0.85, // 85% de visibilidad para resaltar los graffitis/cancha
 
     // ===================================================================================
