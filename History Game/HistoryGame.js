@@ -27,8 +27,8 @@
   };
 
   const ADMIN_CREDENTIALS = {
-    ADMIN_USER: "Oso",
-    ADMIN_PASSWORD: "123456",
+    ADMIN_USER: "Deion",
+    ADMIN_PASSWORD: "232026",
   };
 
   // =====================================================================================
