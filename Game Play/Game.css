@@ -2026,7 +2026,7 @@ select option {
   /* =====================================================================================
      1. CAMBIA AQUÍ TU IMAGEN DE FONDO (URL):
      ===================================================================================== */
-  --matchup-bg-image: url("/Asset/Fondo1.png");
+  --matchup-bg-image: url("../Asset/Fondo1.png");
 
   /* CAMBIA AQUÍ LA TRANSPARENCIA DEL FONDO (0.5 = 50% de opacidad): */
   --matchup-bg-opacity: 0.5;
