@@ -83,7 +83,7 @@
     // 👈 2. [FONDO 1] FONDO DETRÁS DE CADA JUEGO INDIVIDUAL (Banner Versus)
     //    Puedes colocar una URL ("https://...") o una ruta local ("./assets/fondos/...")
     // ===================================================================================
-    FONDO_DETRAS_DE_CADA_JUEGO: "/Asset/Fondo1.png",
+    FONDO_DETRAS_DE_CADA_JUEGO: "../Asset/Fondo1.png",
     // Ejemplo de ruta local: "./assets/fondos/fondo_juego.jpg",
     OPACIDAD_FONDO_CADA_JUEGO: 0.85, // 0.1 a 1.0 (85% de visibilidad para resaltar los graffitis/cancha)
 
@@ -91,7 +91,7 @@
     // 👈 3. [FONDO 2] FONDO GENERAL DETRÁS DE TODA LA HOJA DEL PDF
     //    Puedes colocar una URL ("https://...") o una ruta local ("./assets/fondos/...")
     // ===================================================================================
-    FONDO_GENERAL_PAGINA_PDF: "/Asset/Wallpaper B1.jpeg",
+    FONDO_GENERAL_PAGINA_PDF: "../Asset/Wallpaper B1.jpeg",
     // Ejemplo de ruta local: "./assets/fondos/fondo_estadio.jpg",
     OPACIDAD_FONDO_GENERAL_PAGINA: 0.6, // 0.1 a 1.0 (60% de visibilidad sutil)
 
