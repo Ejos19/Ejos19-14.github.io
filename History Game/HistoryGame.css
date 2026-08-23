@@ -52,7 +52,7 @@
   --text-muted: #fda4af;
 
   /* --- CONFIGURACIÓN DE BANNER Y FONDO DE TARJETAS --- */
-  --matchup-bg-image: url("/Asset/Fondo1.png");
+  --matchup-bg-image: url("../Asset/Fondo1.png");
   --matchup-bg-opacity: 0.45;
   --vs-font-family: "Russo One", "Montserrat", "Bebas Neue", sans-serif;
 }
