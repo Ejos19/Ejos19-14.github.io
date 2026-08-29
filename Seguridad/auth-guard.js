@@ -23,8 +23,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const ENLACES_PROTEGIDOS = [
     "Afiliados/index.html",
     "Game Play/Game.html",
-    "History Game/HistoryGame.html",
-    "Position Table/PositionTable.html",
     "Reloj/Reloj.html",
     // "NuevaSeccion/pagina.html" // <--- Agrega aquí nuevas rutas a proteger
   ];
