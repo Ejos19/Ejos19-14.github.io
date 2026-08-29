@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Estructura: "nombre_de_usuario": "contraseña"
   // ========================================================================
   const USUARIOS_PERMITIDOS = {
-    Deion: "232026",Osorio: "20870092", // <--- USUARIO Y CONTRASEÑA PRINCIPAL
+    Deion: "232026", // <--- USUARIO Y CONTRASEÑA PRINCIPAL
     // "Admin": "12345",   // <--- Puedes agregar más usuarios aquí quitando las dos barras '//'
   };
 
