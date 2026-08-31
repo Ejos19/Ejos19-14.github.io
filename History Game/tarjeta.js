@@ -20,11 +20,11 @@
    * =================================================================================== */
   const CONFIG_FLYER = {
     // ⬇️ MODIFICA ESTA URL CON LA IMAGEN DE FONDO QUE PREFIERAS:
-    IMAGEN_FONDO_FLYER: "../Asset/Cancha.png",
+    IMAGEN_FONDO_FLYER: "../Asset/Cancha2.png",
 
     // ⬇️ OPACIDAD REAL DE LA IMAGEN DE FONDO (0.0 = transparente, 1.0 = visible al 100%):
     // Modifica este valor (ej. 0.50, 0.75, 0.85, 1.0) para ver inmediatamente el cambio de intensidad.
-    OPACIDAD_IMAGEN_FONDO: 0.35,
+    OPACIDAD_IMAGEN_FONDO: 0.95,
 
     // Color/Gradiente de respaldo en caso de que la imagen tarde en cargar o no tenga conexión:
     GRADIENTE_RESPALDO: "linear-gradient(180deg, #140508 0%, #080203 100%)",
