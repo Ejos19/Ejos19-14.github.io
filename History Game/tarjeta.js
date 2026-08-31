@@ -20,7 +20,7 @@
    * =================================================================================== */
   const CONFIG_FLYER = {
     // ⬇️ MODIFICA ESTA URL CON LA IMAGEN DE FONDO QUE PREFIERAS:
-    IMAGEN_FONDO_FLYER: "/Asset/Cancha.png",
+    IMAGEN_FONDO_FLYER: "../Asset/Cancha.png",
 
     // Opacidad de la capa oscura sobre la imagen (0.0 = transparente, 1.0 = negro total)
     // Recomendado: 0.75 a 0.88 para garantizar máximo contraste y legibilidad de textos.
