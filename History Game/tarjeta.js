@@ -20,7 +20,7 @@
    * =================================================================================== */
   const CONFIG_FLYER = {
     // ⬇️ MODIFICA ESTA URL CON LA IMAGEN DE FONDO QUE PREFIERAS:
-    IMAGEN_FONDO_FLYER: "/Asset/Cancha.png",
+    IMAGEN_FONDO_FLYER: "../Asset/Cancha.png",
 
     // ⬇️ OPACIDAD REAL DE LA IMAGEN DE FONDO (0.0 = transparente, 1.0 = visible al 100%):
     // Modifica este valor (ej. 0.50, 0.75, 0.85, 1.0) para ver inmediatamente el cambio de intensidad.
