@@ -24,7 +24,7 @@
 
     // ⬇️ OPACIDAD REAL DE LA IMAGEN DE FONDO (0.0 = transparente, 1.0 = visible al 100%):
     // Modifica este valor (ej. 0.50, 0.75, 0.85, 1.0) para ver inmediatamente el cambio de intensidad.
-    OPACIDAD_IMAGEN_FONDO: 0.95,
+    OPACIDAD_IMAGEN_FONDO: 0.96,
 
     // Color/Gradiente de respaldo en caso de que la imagen tarde en cargar o no tenga conexión:
     GRADIENTE_RESPALDO: "linear-gradient(180deg, #140508 0%, #080203 100%)",
@@ -445,9 +445,9 @@
 
           <div class="flyer-vs-center-box">
             <div class="flyer-vs-wrapper">
-              <i class="fa-solid fa-bolt flyer-vs-icon"></i>
+              <i class="fa-solid fa-basketball"></i>
               <span class="flyer-vs-text">VS</span>
-              <i class="fa-solid fa-bolt flyer-vs-icon"></i>
+              <i class="fa-solid fa-basketball"></i>
             </div>
 
             ${
