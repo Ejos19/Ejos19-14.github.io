@@ -49,7 +49,7 @@
     // ===================================================================================
     // 👈 3. [FONDO 2] FONDO GENERAL DETRÁS DE TODA LA HOJA DEL PDF
     // ===================================================================================
-    FONDO_GENERAL_PAGINA_PDF: "/Asset/Wallpaper B1.jpeg",
+    FONDO_GENERAL_PAGINA_PDF: "../Asset/Wallpaper B1.jpeg",
     OPACIDAD_FONDO_GENERAL_PAGINA: 0.6, // 60% de visibilidad sutil
 
     // ===================================================================================
