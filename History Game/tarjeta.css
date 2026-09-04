@@ -45,6 +45,47 @@
   --flyer-text-light-pink: #fecdd3; /* Rosa pastel para notas y detalles */
   --flyer-text-subtle-pink: #fda4af; /* Rosa medio para metadatos y árbitros */
   --flyer-text-local-meta: #7dd3fc; /* Celeste claro para IDs de equipo local */
+
+  /* ===================================================================================
+   * 🔤 FUENTES Y TIPOGRAFÍAS INDEPENDIENTES (MODIFICA AQUÍ LA LETRA DE CADA TEXTO)
+   * ===================================================================================
+   * Cada texto tiene su propia variable para que puedas cambiar la fuente de manera
+   * 100% independiente. Están conectadas a Google Fonts (la librería más completa).
+   * 
+   * 💡 Ejemplos de fuentes que puedes escribir directamente:
+   * - Deportivas / Impacto:  'Bebas Neue', 'Anton', 'Oswald', 'Russo One', 'Teko'
+   * - Modernas / Populares:  'Montserrat', 'Poppins', 'Rubik', 'Barlow Condensed'
+   * - Futuristas / Neón:     'Orbitron', 'Chakra Petch', 'Rajdhani', 'Oxanium'
+   * - Digitales / Mono:      'JetBrains Mono', monospace
+   * - Limpias / Lectura:     'Inter', 'Roboto', sans-serif
+   * =================================================================================== */
+  --flyer-font-tournament: "Montserrat", sans-serif; /* 1. Nombre del Torneo */
+  --flyer-font-tournament-id:
+    "JetBrains Mono", monospace; /* 2. ID del Torneo */
+  --flyer-font-game-title:
+    "Montserrat", "Inter", sans-serif; /* 3. Título (ej: JUEGO 1 o FINAL) */
+  --flyer-font-date:
+    "Montserrat", "Russo One", "Bebas Neue", sans-serif; /* 4. Fecha grande */
+  --flyer-font-time:
+    "JetBrains Mono", "Montserrat", monospace; /* 5. Hora del juego */
+  --flyer-font-tag-local: "Montserrat", sans-serif; /* 6. Etiqueta "LOCAL" */
+  --flyer-font-tag-visitor:
+    "Montserrat", sans-serif; /* 7. Etiqueta "VISITANTE" */
+  --flyer-font-team-local:
+    "Montserrat", "Inter", sans-serif; /* 8. Nombre de Equipo Local */
+  --flyer-font-team-visitor:
+    "Montserrat", "Inter", sans-serif; /* 9. Nombre de Equipo Visitante */
+  --flyer-font-team-meta:
+    "JetBrains Mono", monospace; /* 10. Metadatos (ID / CÓD) */
+  --flyer-font-score:
+    "JetBrains Mono", "Montserrat", monospace; /* 11. Marcador numérico */
+  --flyer-font-status: "Montserrat", sans-serif; /* 12. Badge de Estatus */
+  --flyer-font-location:
+    "Montserrat", "Inter", sans-serif; /* 13. Cancha / Sede */
+  --flyer-font-notes: "Inter", sans-serif; /* 14. Observaciones */
+  --flyer-font-referees:
+    "Inter", sans-serif; /* 15. Árbitros y cuerpo técnico */
+  --flyer-font-footer: "Montserrat", sans-serif; /* 16. Pie institucional */
 }
 
 /* =====================================================================================
@@ -310,7 +351,7 @@
   background: rgba(18, 2, 6, 0.55);
   border: 1.5px solid var(--flyer-color-neon-red);
   border-radius: 14px;
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--flyer-font-tournament);
   text-transform: uppercase;
   margin-bottom: 8px;
   box-shadow:
@@ -325,6 +366,7 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
+  font-family: var(--flyer-font-tournament);
   font-size: 0.8rem;
   font-weight: 800;
   color: var(--flyer-text-light-pink);
@@ -340,7 +382,7 @@
 }
 
 .flyer-tournament-id-row {
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--flyer-font-tournament-id);
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -351,7 +393,7 @@
 
 /* Título de Juego (ej: "JUEGO 1" o "GRAN FINAL") */
 .flyer-game-title {
-  font-family: "Montserrat", "Inter", sans-serif;
+  font-family: var(--flyer-font-game-title);
   font-size: 1.05rem;
   font-weight: 900;
   text-transform: uppercase;
@@ -364,7 +406,7 @@
 
 /* 📅 FECHA EN LETRAS GRANDES CON CONTORNO NEÓN CEÑIDO AL BORDE (SIN DESBORDE) */
 .flyer-date-main {
-  font-family: "Montserrat", "Russo One", "Bebas Neue", sans-serif;
+  font-family: var(--flyer-font-date);
   font-size: 2.25rem;
   line-height: 1.15;
   font-weight: 900;
@@ -373,11 +415,11 @@
   letter-spacing: 0.02em;
   margin: 4px 0;
   text-shadow:
-    -1px -1px 0 var(--flyer-color-neon-red),
-    1px -1px 0 var(--flyer-color-neon-red),
-    -1px 1px 0 var(--flyer-color-neon-red),
-    1px 1px 0 var(--flyer-color-neon-red),
-    0 0 3px var(--flyer-color-neon-red),
+    -1px -1px 0 var(--flyer-bg-main),
+    1px -1px 0 var(--flyer-bg-main),
+    -1px 1px 0 var(--flyer-bg-main),
+    1px 1px 0 var(--flyer-bg-main),
+    0 0 3px var(--flyer-bg-main),
     0 2px 4px rgba(0, 0, 0, 0.95);
 }
 
@@ -387,16 +429,16 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  font-family: "JetBrains Mono", "Montserrat", monospace;
+  font-family: var(--flyer-font-time);
   font-size: 1.45rem;
   font-weight: 800;
-  color: azure;
+  color: var(--flyer-text-pure-white);
   text-shadow:
-    -0.5px -0.5px 0 var(--flyer-color-neon-red),
-    0.5px -0.5px 0 var(--flyer-color-neon-red),
-    -0.5px 0.5px 0 var(--flyer-color-neon-red),
-    0.5px 0.5px 0 var(--flyer-color-neon-red),
-    0 0 3px var(--flyer-color-neon-red),
+    -0.5px -0.5px 0 var(--flyer-bg-main),
+    0.5px -0.5px 0 var(--flyer-bg-main),
+    -0.5px 0.5px 0 var(--flyer-bg-main),
+    0.5px 0.5px 0 var(--flyer-bg-main),
+    0 0 3px var(--flyer-bg-main),
     0 2px 4px rgba(0, 0, 0, 0.9);
   letter-spacing: 0.05em;
   margin-top: 2px;
@@ -454,7 +496,7 @@
 
 /* Etiqueta "LOCAL" (Azul Neón / Cyan) */
 .flyer-team-tag-wrap.side-local .flyer-team-tag {
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--flyer-font-tag-local);
   font-size: 0.8rem;
   font-weight: 900;
   letter-spacing: 0.14em;
@@ -471,7 +513,7 @@
 
 /* Etiqueta "VISITANTE" (Rojo Neón) */
 .flyer-team-tag-wrap.side-visitor .flyer-team-tag {
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--flyer-font-tag-visitor);
   font-size: 0.8rem;
   font-weight: 900;
   letter-spacing: 0.14em;
@@ -489,7 +531,7 @@
 /* 🛡️ FILA 2: CONTENEDORES DE LOGOS Y CAJA CENTRAL VS (Altura uniforme fija: 140px) */
 .flyer-team-logo-container {
   width: 140px;
-  height: 140px;
+  height: 200px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -501,8 +543,8 @@
 }
 
 .flyer-team-logo-img {
-  max-width: 135px;
-  max-height: 135px;
+  max-width: 200px;
+  max-height: 200px;
   width: auto;
   height: auto;
   object-fit: contain;
@@ -528,6 +570,15 @@
   filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.8));
 }
 
+/* =====================================================================================
+ * ⚔️ IMAGEN "VS" CENTRAL (100% LIMPIA, SIN FONDO, BORDES, MARCOS NI RECUADROS)
+ * =====================================================================================
+ * 👉 Para cambiar el tamaño de la imagen VS:
+ *    - Puedes cambiar el max-width o max-height en .flyer-vs-clean-img abajo.
+ *    - O bien editar ANCHO_IMAGEN_VS y ALTO_IMAGEN_VS en tarjeta.js.
+ *    - La imagen no tiene fondos, bordes, sombras cuadradas ni marcos.
+ * ===================================================================================== */
+
 /* Caja Central VS alineada a la misma altura de los logos */
 .flyer-vs-center-box {
   height: 140px;
@@ -537,36 +588,47 @@
   justify-content: center;
   gap: 6px;
   margin-bottom: 12px;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
-.flyer-vs-wrapper {
+/* Contenedor de la Imagen VS: 100% transparente sin bordes */
+.flyer-vs-image-container {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 auto;
 }
 
-.flyer-vs-icon {
-  font-size: 1.15rem;
-  color: var(--flyer-color-neon-red);
-  filter: drop-shadow(0 0 4px var(--flyer-color-neon-red));
+/* Elemento <img> de VS: Limpio, sin marco ni recuadros */
+.flyer-vs-clean-img {
+  display: block;
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  margin: 0 auto;
+  object-fit: contain;
+
+  /* 📏 TAMAÑO CONFIGURABLE: Ajusta aquí el tamaño máximo si lo deseas desde CSS */
+  max-width: 200px;
+  max-height: 150px;
+
+  /* Sombra suave que sigue el contorno de la imagen sin crear cajas cuadradas */
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.85));
+  transition: transform 0.2s ease;
 }
 
-/* Letras "VS" con Neón Rojo nítido */
-.flyer-vs-text {
-  font-family: "Russo One", "Bebas Neue", sans-serif;
-  font-size: 2.7rem;
-  font-weight: 900;
-  line-height: 1;
-  letter-spacing: 0.06em;
-  color: azure;
-  text-shadow:
-    -1.5px -1.5px 0 var(--flyer-color-neon-red-bright),
-    1.5px -1.5px 0 var(--flyer-color-neon-red-bright),
-    -1.5px 1.5px 0 var(--flyer-color-neon-red-bright),
-    1.5px 1.5px 0 var(--flyer-color-neon-red-bright),
-    0 0 4px var(--flyer-color-neon-red),
-    0 3px 6px rgba(0, 0, 0, 0.95);
+.flyer-vs-clean-img:hover {
+  transform: scale(1.06);
 }
 
 /* =====================================================================================
@@ -578,7 +640,7 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  font-family: "JetBrains Mono", "Montserrat", monospace;
+  font-family: var(--flyer-font-score);
   font-size: 1.9rem;
   font-weight: 900;
   line-height: 1;
@@ -617,8 +679,8 @@
 
 /* Base de los Badges de Estatus */
 .flyer-status-badge {
-  font-family: "Montserrat", sans-serif;
-  font-size: 0.72rem;
+  font-family: var(--flyer-font-status);
+  font-size: 0.6rem;
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -676,30 +738,31 @@
 
 /* Nombre de Equipo Local (Blanco con resplandor perimetral Cyan) */
 .flyer-team-col.team-local .flyer-team-name {
+  font-family: var(--flyer-font-team-local);
   color: #ffffff;
-  /* text-shadow:
-    -0.5px -0.5px 0 var(--flyer-color-neon-cyan),
-    0.5px -0.5px 0 var(--flyer-color-neon-cyan),
-    -0.5px 0.5px 0 var(--flyer-color-neon-cyan),
-    0.5px 0.5px 0 var(--flyer-color-neon-cyan),
-    0 0 2px var(--flyer-color-neon-cyan),
-    0 2px 4px rgba(0, 0, 0, 0.95);*/
+  text-shadow:
+    -0.5px -0.5px 0 var(--flyer-bg-main),
+    0.5px -0.5px 0 var(--flyer-bg-main),
+    -0.5px 0.5px 0 var(--flyer-bg-main),
+    0.5px 0.5px 0 var(---flyer-bg-main),
+    0 0 2px var(--flyer-bg-main),
+    0 2px 4px rgba(0, 0, 0, 0.95);
 }
 
 /* Nombre de Equipo Visitante (Blanco con resplandor perimetral Rojo) */
 .flyer-team-col.team-visitor .flyer-team-name {
+  font-family: var(--flyer-font-team-visitor);
   color: #ffffff;
-  /*text-shadow:
-    -0.5px -0.5px 0 var(--flyer-color-neon-red-bright),
-    0.5px -0.5px 0 var(--flyer-color-neon-red-bright),
-    -0.5px 0.5px 0 var(--flyer-color-neon-red-bright),
-    0.5px 0.5px 0 var(--flyer-color-neon-red-bright),
-    0 0 2px var(--flyer-color-neon-red-bright),
-    0 2px 4px rgba(0, 0, 0, 0.95);*/
+  text-shadow:
+    -0.5px -0.5px 0 var(--flyer-bg-main),
+    0.5px -0.5px 0 var(--flyer-bg-main),
+    -0.5px 0.5px 0 var(--flyer-bg-main),
+    0.5px 0.5px 0 var(--flyer-bg-main),
+    0 0 2px var(--flyer-bg-main),
+    0 2px 4px rgba(0, 0, 0, 0.95);
 }
 
 .flyer-team-name {
-  font-family: "Montserrat", "Inter", sans-serif;
   font-size: 1.25rem;
   font-weight: 900;
   line-height: 1.2;
@@ -716,7 +779,7 @@
   align-items: center;
   justify-content: flex-start;
   gap: 2px;
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--flyer-font-team-meta);
   font-size: 0.76rem;
   min-height: 38px;
   text-align: center;
@@ -758,7 +821,7 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  font-family: "Montserrat", "Inter", sans-serif;
+  font-family: var(--flyer-font-location);
   font-size: 0.98rem;
   font-weight: 800;
   color: #fff1f2;
@@ -775,7 +838,7 @@
 /* Observaciones del partido */
 .flyer-notes-block {
   max-width: 440px;
-  font-family: "Inter", sans-serif;
+  font-family: var(--flyer-font-notes);
   font-size: 0.82rem;
   line-height: 1.45;
   color: var(--flyer-text-light-pink);
@@ -807,7 +870,7 @@
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 0, 55, 0.25);
   border-radius: 8px;
-  font-family: "Inter", sans-serif;
+  font-family: var(--flyer-font-referees);
   font-size: 0.74rem;
   font-weight: 600;
   color: var(--flyer-text-subtle-pink);
@@ -820,7 +883,7 @@
 
 /* Pie Institucional */
 .flyer-footer-branding {
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--flyer-font-footer);
   font-size: 0.65rem;
   font-weight: 700;
   letter-spacing: 0.16em;
