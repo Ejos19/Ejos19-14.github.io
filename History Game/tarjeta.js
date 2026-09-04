@@ -11,20 +11,39 @@
   "use strict";
 
   /* ===================================================================================
-   * 🎨 1. SECCIÓN DE CONFIGURACIÓN Y PERSONALIZACIÓN DEL FLYER (IMAGEN DE FONDO)
+   * 🎨 1. SECCIÓN DE CONFIGURACIÓN Y PERSONALIZACIÓN DEL FLYER
    * ===================================================================================
-   * 👉 AQUÍ PUEDES MODIFICAR FÁCILMENTE LA IMAGEN DE FONDO DE LA TARJETA:
-   * Puedes colocar:
-   * 1. Una URL web externa (ej. Unsplash, Google Drive pública, CDN)
-   * 2. Una ruta local en tu proyecto (ej. "assets/fondo_cancha.jpg", "Fondo1.png")
+   * 👉 AQUÍ PUEDES MODIFICAR FÁCILMENTE:
+   * 1. Imagen de fondo de la tarjeta y su opacidad.
+   * 2. Imagen "VS" central (limpia, sin fondo, marco ni recuadros) y su tamaño.
+   * 3. Tipografías / Fuentes independientes para cada texto conectadas a Google Fonts.
    * =================================================================================== */
   const CONFIG_FLYER = {
     // ⬇️ MODIFICA ESTA URL CON LA IMAGEN DE FONDO QUE PREFIERAS:
-    IMAGEN_FONDO_FLYER: "../Asset/Cancha2.png",
+    IMAGEN_FONDO_FLYER: "../Asset/Fondo8.png",
 
     // ⬇️ OPACIDAD REAL DE LA IMAGEN DE FONDO (0.0 = transparente, 1.0 = visible al 100%):
     // Modifica este valor (ej. 0.50, 0.75, 0.85, 1.0) para ver inmediatamente el cambio de intensidad.
-    OPACIDAD_IMAGEN_FONDO: 0.96,
+    OPACIDAD_IMAGEN_FONDO: 0.8,
+
+    /* ===================================================================================
+     * ⚔️ IMAGEN "VS" CENTRAL (100% LIMPIA, SIN FONDO, MARCO, BORDES O RECUADROS)
+     * ===================================================================================
+     * 👉 CÓMO CAMBIAR LA IMAGEN "VS":
+     * Puedes asignar a IMAGEN_VS cualquiera de las siguientes opciones:
+     *   1. Una ruta local en tu proyecto: "img/vs.png", "assets/vs.svg" o "vs_clean.png"
+     *   2. Una URL directa de internet: "https://ejemplo.com/vs_transparente.png"
+     *   3. La imagen predeterminada abajo (SVG deportivo neón de alta definición sin fondo).
+     *
+     * 👉 CÓMO CAMBIAR EL TAMAÑO DE LA IMAGEN "VS":
+     *   - Modifica ANCHO_IMAGEN_VS (ej: "70px", "85px", "100px", "120px")
+     *   - Modifica ALTO_IMAGEN_VS (deja "auto" para mantener la proporción perfecta)
+     * =================================================================================== */
+    IMAGEN_VS: "../Asset/Vs.png",
+
+    // 📏 TAMAÑO CONFIGURABLE DE LA IMAGEN "VS" (MODIFICA AQUÍ):
+    ANCHO_IMAGEN_VS: "150px", // Ancho de la imagen (ej: "65px", "85px", "100px", "120px")
+    ALTO_IMAGEN_VS: "150px", // Alto de la imagen (usa "auto" o ej: "60px", "80px")
 
     // Color/Gradiente de respaldo en caso de que la imagen tarde en cargar o no tenga conexión:
     GRADIENTE_RESPALDO: "linear-gradient(180deg, #140508 0%, #080203 100%)",
@@ -34,6 +53,84 @@
 
     // Nombre por defecto del torneo si no está asignado:
     TORNEO_DEFECTO: "Torneo Oficial de Baloncesto",
+  };
+
+  /* ===================================================================================
+   * 🔤 1.B. CONFIGURACIÓN INDEPENDIENTE DE FUENTES / LETRAS (CONEXIÓN A GOOGLE FONTS)
+   * ===================================================================================
+   * 👉 AQUÍ PUEDES MODIFICAR LA FUENTE DE CADA TEXTO DE MANERA 100% INDEPENDIENTE.
+   *
+   * Está conectado a GOOGLE FONTS (la librería con más de 1,600 fuentes del mundo).
+   * Solo escribe el nombre de cualquier fuente de Google Fonts entre comillas y el
+   * sistema la descargará y aplicará automáticamente en tiempo real.
+   *
+   * 💡 EJEMPLOS DE FUENTES QUE PUEDES USAR EN CUALQUIER CAMPO ABAJO:
+   *  - DEPORTIVAS / TITULARES:  "'Bebas Neue', sans-serif"
+   *                             "'Anton', sans-serif"
+   *                             "'Oswald', sans-serif"
+   *                             "'Russo One', sans-serif"
+   *                             "'Teko', sans-serif"
+   *                             "'Barlow Condensed', sans-serif"
+   *  - MODERNAS / POPULARES:    "'Montserrat', sans-serif"
+   *                             "'Poppins', sans-serif"
+   *                             "'Rubik', sans-serif"
+   *                             "'Quicksand', sans-serif"
+   *  - FUTURISTAS / NEÓN:       "'Orbitron', sans-serif"
+   *                             "'Chakra Petch', sans-serif"
+   *                             "'Rajdhani', sans-serif"
+   *                             "'Oxanium', sans-serif"
+   *  - DIGITALES / MONO:        "'JetBrains Mono', monospace"
+   *  - LECTURA LIMPIA:          "'Inter', sans-serif"
+   *                             "'Roboto', sans-serif"
+   * =================================================================================== */
+  const CONFIG_TIPOGRAFIAS = {
+    // 1. 🏆 Nombre del Torneo (Texto en la pastilla superior del flyer)
+    FUENTE_NOMBRE_TORNEO: "'Montserrat', sans-serif",
+
+    // 2. 🔢 ID del Torneo (Identificador numérico debajo del nombre del torneo)
+    FUENTE_ID_TORNEO: "'JetBrains Mono', monospace",
+
+    // 3. 🏷️ Título del Partido (ej: "JUEGO 1", "SEMIFINAL", "GRAN FINAL")
+    FUENTE_TITULO_JUEGO: "'Montserrat', sans-serif",
+
+    // 4. 📅 Fecha del partido en letras grandes (ej: "Miercoles. 22 Jul 2026")
+    FUENTE_FECHA_GRANDE: "'Montserrat', 'Russo One', 'Bebas Neue', sans-serif",
+
+    // 5. ⏰ Hora del partido (ej: "08:00 PM")
+    FUENTE_HORA: "'JetBrains Mono', 'Montserrat', monospace",
+
+    // 6. 🏠 Etiqueta de texto "LOCAL" sobre el equipo local
+    FUENTE_ETIQUETA_LOCAL: "'Righteous', sans-serif",
+
+    // 7. ✈️ Etiqueta de texto "VISITANTE" sobre el equipo visitante
+    FUENTE_ETIQUETA_VISITANTE: "'Righteous', sans-serif",
+
+    // 8. 🛡️ Nombre del Equipo Local
+    FUENTE_NOMBRE_EQUIPO_LOCAL: "'Montserrat', sans-serif",
+
+    // 9. 🛡️ Nombre del Equipo Visitante
+    FUENTE_NOMBRE_EQUIPO_VISITANTE: "'Montserrat', sans-serif",
+
+    // 10. 📋 Metadatos de Equipos (ID y Código de cada equipo)
+    FUENTE_METADATOS_EQUIPOS: "'JetBrains Mono', monospace",
+
+    // 11. 🔢 Marcador numérico de puntos (ej: "85 - 78")
+    FUENTE_MARCADOR: "'JetBrains Mono', 'Montserrat', monospace",
+
+    // 12. 📌 Badge de Estatus del partido (PROGRAMADO / FINALIZADO / POSPUESTO)
+    FUENTE_ESTATUS_BADGE: "'Montserrat', sans-serif",
+
+    // 13. 📍 Sede / Cancha / Lugar de juego
+    FUENTE_CANCHA_SEDE: "'Montserrat', 'Inter', sans-serif",
+
+    // 14. 📝 Observaciones y notas del partido
+    FUENTE_OBSERVACIONES: "'Inter', sans-serif",
+
+    // 15. ⚖️ Cuerpo Técnico (Árbitros y Oficiales de mesa de control)
+    FUENTE_CUERPO_TECNICO: "'Inter', sans-serif",
+
+    // 16. 🏛️ Pie de página institucional inferior de la tarjeta
+    FUENTE_PIE_PAGINA: "'Montserrat', sans-serif",
   };
 
   /* ===================================================================================
@@ -56,6 +153,127 @@
     link.rel = "stylesheet";
     link.href = "tarjeta.css";
     document.head.appendChild(link);
+  }
+
+  /* ===================================================================================
+   * 🔌 2.B. CONEXIÓN Y CARGA DINÁMICA CON LA LIBRERÍA GOOGLE FONTS
+   * ===================================================================================
+   * Detecta automáticamente las fuentes configuradas en CONFIG_TIPOGRAFIAS y las descarga
+   * directamente desde Google Fonts. Si agregas una fuente nueva, no necesitas configurar
+   * nada más: se descargará y aplicará de forma autónoma.
+   * =================================================================================== */
+  function asegurarFuentesGoogle() {
+    const fuentesConfiguradas = Object.values(CONFIG_TIPOGRAFIAS);
+    const fuentesEstandar = new Set([
+      "sans-serif",
+      "serif",
+      "monospace",
+      "cursive",
+      "fantasy",
+      "arial",
+      "helvetica",
+      "times new roman",
+      "courier new",
+      "impact",
+    ]);
+
+    fuentesConfiguradas.forEach((fuenteValor) => {
+      if (!fuenteValor || typeof fuenteValor !== "string") return;
+      // Extrae la primera fuente de la lista: ej "'Cinzel', serif" -> "Cinzel"
+      const primerNombre = fuenteValor
+        .split(",")[0]
+        .replace(/['"]/g, "")
+        .trim();
+      if (!primerNombre || fuentesEstandar.has(primerNombre.toLowerCase()))
+        return;
+
+      const linkId = `gfont-link-${primerNombre.toLowerCase().replace(/\s+/g, "-")}`;
+      if (document.getElementById(linkId)) return;
+
+      try {
+        const link = document.createElement("link");
+        link.id = linkId;
+        link.rel = "stylesheet";
+        link.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(primerNombre)}:wght@400;600;700;800;900&display=swap`;
+        document.head.appendChild(link);
+      } catch (e) {
+        console.warn(
+          "[tarjeta.js] No se pudo vincular la fuente dinámicamente:",
+          primerNombre,
+          e,
+        );
+      }
+    });
+  }
+
+  /* Aplica las variables tipográficas de CONFIG_TIPOGRAFIAS al póster */
+  function applyFlyerFonts(posterEl) {
+    if (!posterEl) return;
+    asegurarFuentesGoogle();
+    posterEl.style.setProperty(
+      "--flyer-font-tournament",
+      CONFIG_TIPOGRAFIAS.FUENTE_NOMBRE_TORNEO,
+    );
+    posterEl.style.setProperty(
+      "--flyer-font-tournament-id",
+      CONFIG_TIPOGRAFIAS.FUENTE_ID_TORNEO,
+    );
+    posterEl.style.setProperty(
+      "--flyer-font-game-title",
+      CONFIG_TIPOGRAFIAS.FUENTE_TITULO_JUEGO,
+    );
+    posterEl.style.setProperty(
+      "--flyer-font-date",
+      CONFIG_TIPOGRAFIAS.FUENTE_FECHA_GRANDE,
+    );
+    posterEl.style.setProperty(
+      "--flyer-font-time",
+      CONFIG_TIPOGRAFIAS.FUENTE_HORA,
+    );
+    posterEl.style.setProperty(
+      "--flyer-font-tag-local",
+      CONFIG_TIPOGRAFIAS.FUENTE_ETIQUETA_LOCAL,
+    );
+    posterEl.style.setProperty(
+      "--flyer-font-tag-visitor",
+      CONFIG_TIPOGRAFIAS.FUENTE_ETIQUETA_VISITANTE,
+    );
+    posterEl.style.setProperty(
+      "--flyer-font-team-local",
+      CONFIG_TIPOGRAFIAS.FUENTE_NOMBRE_EQUIPO_LOCAL,
+    );
+    posterEl.style.setProperty(
+      "--flyer-font-team-visitor",
+      CONFIG_TIPOGRAFIAS.FUENTE_NOMBRE_EQUIPO_VISITANTE,
+    );
+    posterEl.style.setProperty(
+      "--flyer-font-team-meta",
+      CONFIG_TIPOGRAFIAS.FUENTE_METADATOS_EQUIPOS,
+    );
+    posterEl.style.setProperty(
+      "--flyer-font-score",
+      CONFIG_TIPOGRAFIAS.FUENTE_MARCADOR,
+    );
+    posterEl.style.setProperty(
+      "--flyer-font-status",
+      CONFIG_TIPOGRAFIAS.FUENTE_ESTATUS_BADGE,
+    );
+    posterEl.style.setProperty(
+      "--flyer-font-location",
+      CONFIG_TIPOGRAFIAS.FUENTE_CANCHA_SEDE,
+    );
+    posterEl.style.setProperty(
+      "--flyer-font-notes",
+      CONFIG_TIPOGRAFIAS.FUENTE_OBSERVACIONES,
+    );
+    posterEl.style.setProperty(
+      "--flyer-font-referees",
+      CONFIG_TIPOGRAFIAS.FUENTE_CUERPO_TECNICO,
+    );
+    posterEl.style.setProperty(
+      "--flyer-font-footer",
+      CONFIG_TIPOGRAFIAS.FUENTE_PIE_PAGINA,
+    );
   }
 
   /* ===================================================================================
@@ -308,6 +526,7 @@
     }
     if (posterEl) {
       posterEl.style.background = CONFIG_FLYER.GRADIENTE_RESPALDO;
+      applyFlyerFonts(posterEl);
     }
 
     // Datos del partido
@@ -444,10 +663,20 @@
           </div>
 
           <div class="flyer-vs-center-box">
-            <div class="flyer-vs-wrapper">
-              <i class="fa-solid fa-basketball"></i>
-              <span class="flyer-vs-text">VS</span>
-              <i class="fa-solid fa-basketball"></i>
+            <!-- =============================================================
+                 ⚔️ IMAGEN "VS" CENTRAL (100% LIMPIA, SIN FONDO NI MARCOS)
+                 Totalmente limpia: identificada explícitamente para cambios y tamaño.
+                 Editable en CONFIG_FLYER.IMAGEN_VS, ANCHO_IMAGEN_VS y ALTO_IMAGEN_VS
+                 ============================================================= -->
+            <div class="flyer-vs-image-container" id="flyer-vs-image-wrap">
+              <img 
+                id="flyer-vs-main-image"
+                src="${CONFIG_FLYER.IMAGEN_VS}" 
+                alt="VS" 
+                class="flyer-vs-clean-img"
+                style="width: ${CONFIG_FLYER.ANCHO_IMAGEN_VS}; height: ${CONFIG_FLYER.ALTO_IMAGEN_VS};"
+                crossorigin="anonymous"
+              />
             </div>
 
             ${
